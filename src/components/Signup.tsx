@@ -88,9 +88,6 @@ export default function Signup({ activeModal, setActiveModal }: SignupProps) {
       open={activeModal === "signup"}
       onOpenChange={(open) => setActiveModal(open ? ActiveModal.SIGNUP : null)}
     >
-      <DialogTrigger asChild>
-        <Button>Sign Up</Button>
-      </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Create an account</DialogTitle>
