@@ -1,6 +1,5 @@
-
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -8,36 +7,53 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id             String   @id @default(cuid())
-  username       String   @unique
-  email          String   @unique
-  profilePicture String?
-  signupMethod   SignupMethod @default(EMAIL)
-  isEmailVerified Boolean @default(false)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-
-  otps OTP[]
+model user {
+  id            String         @id @default(cuid())
+  name          String
+  email         String         @unique
+  emailVerified Boolean        @default(false)
+  image         String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  sessions      session[]
+  accounts      account[]      // ✅ Needed for password storage
+  verification  verification[]
 }
 
-model OTP {
+model session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model account {
+  id           String    @id @default(cuid())
+  accountId    String
+  providerId   String
+  userId       String
+  user         user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken  String?
+  refreshToken String?
+  idToken      String?
+  expiresAt    DateTime?
+  password     String?   // ✅ Password stored here (hashed)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model verification {
   id         String   @id @default(cuid())
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     String
-  code       String   // hashed OTP (never store plain text)
+  identifier String
+  value      String
   expiresAt  DateTime
-  purpose    OTPPurpose // e.g., SIGNUP, LOGIN, PASSWORD_RESET
+  userId     String?
+  user       user?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now())
-}
-
-enum SignupMethod {
-  GOOGLE
-  EMAIL
-}
-
-enum OTPPurpose {
-  SIGNUP
-  LOGIN
-  PASSWORD_RESET
+  updatedAt  DateTime @updatedAt
 }

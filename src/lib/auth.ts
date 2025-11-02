@@ -2,16 +2,25 @@ import ConfirmEmail from "@/components/email/verify-otp-template";
 import { betterAuth } from "better-auth";
 import { emailOTP } from "better-auth/plugins";
 import { Resend } from "resend";
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import { prisma } from "./prisma";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const auth = betterAuth({
-  // ... other config options
+  database: prismaAdapter(prisma, {
+    provider: "postgresql",
+  }),
+  emailAndPassword: {
+    enabled: true, // ✅ Enable password authentication
+    requireEmailVerification: true, // ✅ Require email verification before login
+  },
   plugins: [
     emailOTP({
       otpLength: 6,
       expiresIn: 300,
-      overrideDefaultEmailVerification: true,
+      sendVerificationOnSignUp: true,
+
       async sendVerificationOTP({ email, otp, type }) {
         const subjectMap = {
           "sign-in": "Sign in to your account",

@@ -13,7 +13,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { ActiveModal } from "./AuthModals";
 import VerifyOtp from "./VerifyOtpModal";
@@ -22,12 +21,12 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
-
-export const title = "Signup Form";
+import { Eye, EyeOff } from "lucide-react";
 
 const signupSchema = z.object({
   username: z.string().min(1, "Username is required"),
   email: z.email("Enter a valid email address").min(1, "Email is required"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
 type SignupFormData = z.infer<typeof signupSchema>;
@@ -39,8 +38,8 @@ interface SignupProps {
 
 export default function Signup({ activeModal, setActiveModal }: SignupProps) {
   const [isLoading, setIsLoading] = useState(false);
-
-  const [username, setUsername] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     handleSubmit,
@@ -56,23 +55,32 @@ export default function Signup({ activeModal, setActiveModal }: SignupProps) {
 
   const onSubmit = async (data: SignupFormData) => {
     setIsLoading(true);
+    setError(null);
     try {
-      await authClient.emailOtp.sendVerificationOtp({
+      // ✅ Better Auth handles EVERYTHING:
+      // - Creates user
+      // - Hashes password
+      // - Sends verification email
+      const response = await authClient.signUp.email({
         email: data.email,
-        type: "email-verification",
+        password: data.password,
+        name: data.username,
+        callbackURL: "/dashboard", // Where to redirect after verification
       });
-    } catch (error) {
+
+      if (response.error) {
+        setError(response.error.message || "Failed to create account");
+        return;
+      }
+
+      // ✅ User created! OTP sent automatically if emailOTP plugin is configured
+      console.log("User created successfully");
+    } catch (error: any) {
+      setError(error.message || "Failed to create account");
       console.error(error);
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const verifyEmailHandler = async () => {
-    const { data, error } = await authClient.emailOtp.sendVerificationOtp({
-      email,
-      type: "email-verification",
-    });
   };
 
   return (
@@ -91,6 +99,15 @@ export default function Signup({ activeModal, setActiveModal }: SignupProps) {
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {error && (
+            <Alert className="border-destructive/80 bg-destructive/5 text-destructive">
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription className="text-destructive/80">
+                {error}
+              </AlertDescription>
+            </Alert>
+          )}
+
           <div className="space-y-2">
             <Label htmlFor="name">Username</Label>
             <Input
@@ -99,14 +116,12 @@ export default function Signup({ activeModal, setActiveModal }: SignupProps) {
               {...register("username")}
             />
             {errors.username && (
-              <Alert className="w-full max-w-lg border-destructive/80 bg-destructive/5 text-destructive">
-                <AlertTitle>Username error</AlertTitle>
-                <AlertDescription className="text-destructive/80">
-                  {errors.username.message}
-                </AlertDescription>
-              </Alert>
+              <p className="text-sm text-destructive">
+                {errors.username.message}
+              </p>
             )}
           </div>
+
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
@@ -116,23 +131,51 @@ export default function Signup({ activeModal, setActiveModal }: SignupProps) {
               type="email"
             />
             {errors.email && (
-              <Alert className="w-full max-w-lg border-destructive/80 bg-destructive/5 text-destructive">
-                <AlertTitle>Email error</AlertTitle>
-                <AlertDescription className="text-destructive/80">
-                  {errors.email.message}
-                </AlertDescription>
-              </Alert>
+              <p className="text-sm text-destructive">{errors.email.message}</p>
             )}
           </div>
-          <VerifyOtp>
+
+          <div className="space-y-2">
+            <Label htmlFor="password-toggle">Password</Label>
+            <div className="relative">
+              <Input
+                className="bg-background"
+                id="password-toggle"
+                placeholder="Enter your password"
+                type={showPassword ? "text" : "password"}
+                {...register("password")}
+              />
+              <Button
+                className="absolute top-0 right-0 h-full px-3 hover:bg-transparent"
+                onClick={() => setShowPassword(!showPassword)}
+                size="icon"
+                type="button"
+                variant="ghost"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4 text-muted-foreground" />
+                ) : (
+                  <Eye className="h-4 w-4 text-muted-foreground" />
+                )}
+              </Button>
+            </div>
+            {errors.password && (
+              <p className="text-sm text-destructive">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
+
+          <VerifyOtp email={email}>
             <Button
               type="submit"
               className="w-full"
               disabled={!isValid || isLoading}
             >
-              Create Account
+              {isLoading ? "Creating Account..." : "Create Account"}
             </Button>
           </VerifyOtp>
+
           <div className="relative flex items-center gap-2">
             <Separator className="flex-1" />
             <span className="shrink-0 px-2 text-muted-foreground text-xs uppercase">
@@ -140,7 +183,8 @@ export default function Signup({ activeModal, setActiveModal }: SignupProps) {
             </span>
             <Separator className="flex-1" />
           </div>
-          <Button className="w-full" variant="outline">
+
+          <Button className="w-full" variant="outline" type="button">
             <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
               <path
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
