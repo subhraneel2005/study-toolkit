@@ -44,10 +44,10 @@ Uses vector embeddings and semantic search for faster, context-aware responses.
 
 ```bash
 # Clone the repository
-git clone https://github.com/subhraneel2005/secure-agent-workspace
+git clone https://github.com/subhraneel2005/Research-Agent-Workspace.git
 
 # Install dependencies
-cd secure-agent-workspace
+cd Research-Agent-Workspace
 npm install
 
 # Start development server
