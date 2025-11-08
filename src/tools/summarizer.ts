@@ -1,35 +1,35 @@
-import { google } from "@ai-sdk/google";
-import { streamText, tool } from "ai";
-import z from "zod";
-import "dotenv/config";
+import { tool } from "ai";
+import { z } from "zod";
 
-const summarizerTool = tool({
-  name: "summarize",
-  description: "Summarizes a given text document.",
+export const summarizerTool = tool({
+  name: "summarizer",
+  description: "Summarizes long text into a specified tone.",
   inputSchema: z.object({
     text: z
       .string()
-      .min(1)
-      .max(10000)
-      .describe("The text document to be summarized."),
+      .min(50)
+      .describe(
+        "The text content to summarize. Should be at least 50 characters."
+      ),
+    tone: z
+      .enum([
+        "neutral",
+        "formal",
+        "casual",
+        "friendly",
+        "professional",
+        "academic",
+        "concise",
+      ])
+      .default("neutral")
+      .describe("Tone of the summary to be generated."),
   }),
-  execute: async ({ text }) => {
-    let finalSummary = "";
-    const summary = streamText({
-      model: google("gemini-2.5-flash"),
-      prompt: `Summarize the following text concisely:\n\n${text}`,
-    });
-
-    console.log("\n\n--- Summary Started ---");
-
-    for await (const chunk of summary.textStream) {
-      process.stdout.write(chunk);
-      finalSummary += chunk;
-    }
-
-    console.log("\n\n--- Summary Complete ---");
-    return finalSummary;
+  execute: async ({ text, tone }) => {
+    // Tool just returns the data needed - no LLM call
+    return {
+      text,
+      tone,
+      action: "summarize",
+    };
   },
 });
-
-export { summarizerTool };
