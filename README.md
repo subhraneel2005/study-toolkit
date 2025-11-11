@@ -40,10 +40,8 @@
 
 ## Architectural Diagrams
 
-### Notes Generator Agent
-
-<div align="center">
-  <img src="/notes-gen.png" alt="Notes Generator Agent Architecture" width="700" />
+<div align="left">
+  <img src="https://github.com/subhraneel2005/Research-Agent-Workspace/blob/main/public/notes-gen.png?raw=true" alt="Notes Generator Agent Architecture" width="700" />
 </div>
 
 **Overview:**
