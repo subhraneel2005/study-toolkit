@@ -1,33 +1,10 @@
-Flow
-🧠 Research Agent searches and summarizes trending topics.
-✍️ Social Media Agent takes that research summary and writes posts for LinkedIn/Twitter.
-📢 Mod Agent distributes those posts to Discord/Telegram groups.
+today's tasks:
 
-Agents
-
-- Research Agent
-- Social Media Agent
-- Mod Agent
-
-Research Agent
-(Tools)
-
-- web search tool
-- summarizer tool
-- report generator clean or structured report (markdown or PDF).
-
-Social Media Agent (Twitter/X, LinkedIn)
-(Tools)
-
-- title generator
-- main content generator
-- newsletter generator
-- thumbnail/image generator
-- post generator for both twitter and linkedIn
-
-Mod Agent (Discord, Telegram, Gmail)
-(Tools)
-
-- send daily posts to discord group
-- send daily posts to telegram group
-- send newsletters via gmail
+- api management in Profile page
+- make profile settings view only not editable
+- add (connect google drive) and (connect notion) in Apps page
+- toggle minimap should actually work (add zustand to persist the toggled state after refresh as well)
+- chat with pdf, summarizer, and flashcards agent should have right handle for sending output to notes gen agent
+- start creating the notes generator agent , it will have left handle edge to accept outputs from the other nodes as input
+- chat-w-pdf sheet should persist the chats (do not store in db, perist them for 24 hrs the dispose them)
+- keep the web search agent and summarizer agent the same as they are

@@ -43,7 +43,7 @@
 <div align="left">
   <img src="https://github.com/subhraneel2005/Research-Agent-Workspace/blob/main/public/notes-gen.png?raw=true" alt="Notes Generator Agent Architecture" width="700" />
 </div>
-
+lp
 **Overview:**
 The Notes Generator Agent is responsible for generating MDX-formatted, editable notes from multiple AI agent outputs (such as Chat-w-pdf, Flashcards, and Summarizer agents). It enables users to view, edit, autosave, and export notes seamlessly — much like editing a Notion document.
 

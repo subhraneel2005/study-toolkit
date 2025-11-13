@@ -13,13 +13,14 @@ model user {
   email         String         @unique
   emailVerified Boolean        @default(false)
   image         String?
+  geminiKey     String?
+  serperKey     String?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   sessions      session[]
   accounts      account[]      // ✅ Needed for password storage
   verification  verification[]
 }
-
 model session {
   id        String   @id @default(cuid())
   expiresAt DateTime

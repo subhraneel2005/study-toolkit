@@ -20,6 +20,8 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { useAuthStore } from "@/stores/useAuthStore";
 import ProfileLoadingSkeleton from "./ProfileLoadingSkeleton";
 import { useEffect } from "react";
+import { encrypt } from "@/lib/encryption";
+import { encryptOnClient } from "@/lib/clientEncryption";
 
 export const title = "Profile Edit Form";
 
@@ -60,8 +62,36 @@ export default function ProfileSettings() {
     }
   }, [user, form]);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const encryptedGeminiKey = await encryptOnClient(
+        values.googleGeminiKey || ""
+      );
+      const encryptedSerperKey = await encryptOnClient(values.serperKey || "");
+
+      const res = await fetch("/api/keys", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          geminiKey: encryptedGeminiKey,
+          serperKey: encryptedSerperKey,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to update keys");
+
+      const data = await res.json();
+      console.log("✅ Keys updated:", data);
+
+      form.reset({
+        username: user?.name ?? "",
+        email: user?.email ?? "",
+        googleGeminiKey: "",
+        serperKey: "",
+      });
+    } catch (err) {
+      console.error("❌ Error:", err);
+    }
   }
 
   if (isLoading) {
@@ -195,9 +225,9 @@ export default function ProfileSettings() {
 
           {/* Profile settings section */}
           <div className="border-t border-border pt-6">
-            <h3 className="font-medium text-lg">Profile Settings</h3>
+            <h3 className="font-medium text-lg">Profile Information</h3>
             <p className="text-muted-foreground text-sm">
-              Update your profile information
+              View profile information
             </p>
           </div>
           <FormField
@@ -208,8 +238,10 @@ export default function ProfileSettings() {
                 <FormLabel>Username</FormLabel>
                 <FormControl>
                   <Input
-                    className="bg-background"
+                    className="bg-muted text-muted-foreground cursor-not-allowed"
                     placeholder="johndoe"
+                    readOnly
+                    disabled
                     {...field}
                   />
                 </FormControl>
@@ -228,9 +260,11 @@ export default function ProfileSettings() {
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
-                    className="bg-background"
+                    className="bg-muted text-muted-foreground cursor-not-allowed"
                     placeholder="john@example.com"
                     type="email"
+                    readOnly
+                    disabled
                     {...field}
                   />
                 </FormControl>
@@ -241,13 +275,6 @@ export default function ProfileSettings() {
               </FormItem>
             )}
           />
-
-          <div className="flex gap-2">
-            <Button type="submit">Update Profile</Button>
-            <Button type="button" variant="outline">
-              Cancel
-            </Button>
-          </div>
         </form>
       </Form>
     </div>
