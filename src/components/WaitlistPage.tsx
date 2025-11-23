@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 
 export default function WaitlistPage() {
   return (
-    <div className="min-h-screen w-full justify-center items-center flex flex-col">
+    <div className="h-full w-full justify-center items-center flex flex-col">
       <h1 className="text-5xl md:text-6xl font-bold tracking-[-2.2px]">
         Join the Waitlist
       </h1>

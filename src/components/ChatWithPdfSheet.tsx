@@ -9,10 +9,10 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import ChatInterface from "./ChatInterface";
-import { usePdfStore } from "@/stores/usePdfStore";
+import { usePdfSheetStore } from "@/stores/usePdfSheetStore";
 
 const ChatWithPdfSheet = ({ children }: { children: React.ReactNode }) => {
-  const { open, setOpen } = usePdfStore();
+  const { open, setOpen } = usePdfSheetStore();
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>

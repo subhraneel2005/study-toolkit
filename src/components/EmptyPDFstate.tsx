@@ -11,7 +11,8 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
-import { usePdfStore } from "@/stores/usePdfStore";
+import { usePdfDataStore } from "@/stores/usePdfDataStore";
+import { usePdfSheetStore } from "@/stores/usePdfSheetStore";
 
 export const title = "Empty with Single Action";
 
@@ -21,7 +22,8 @@ export default function EmptyPDFstate({
   handleChange: () => void;
 }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { setPdfFile, setPdfName, setPdfDataUrl, setOpen } = usePdfStore();
+  const { setPdfFile, setPdfName, setPdfDataUrl } = usePdfDataStore();
+  const { setOpen } = usePdfSheetStore();
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

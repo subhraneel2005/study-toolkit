@@ -14,7 +14,7 @@ import { authClient } from "@/lib/auth-client";
 export default function TopNav() {
   const pathname = usePathname();
 
-  const isCanvas = pathname === "/";
+  const isCanvas = pathname === "/canvas";
 
   const { theme, setTheme, systemTheme } = useTheme();
 
@@ -53,7 +53,7 @@ export default function TopNav() {
           {isDark ? <Sun /> : <Moon />}
         </Button>
 
-        <Link href={"/"}>
+        <Link href={"/canvas"}>
           <Button variant="ghost" className="cursor-pointer ">
             Canvas
           </Button>

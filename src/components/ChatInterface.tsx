@@ -50,7 +50,8 @@ import { DefaultChatTransport } from "ai";
 // import { Response } from "./ai-elements/response";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
-import { usePdfStore } from "@/stores/usePdfStore";
+import { useChatStore } from "@/stores/useChatStore";
+import { usePdfDataStore } from "@/stores/usePdfDataStore";
 
 async function convertFilesToDataURLs(
   files: FileList
@@ -83,12 +84,21 @@ async function convertFilesToDataURLs(
 }
 
 export default function ChatInterface() {
-  const { messages, setMessages, status, sendMessage, regenerate, stop } =
-    useChat({
-      transport: new DefaultChatTransport({
-        api: "/api/chat",
-      }),
-    });
+  const { messages, status, sendMessage, regenerate, stop } = useChat({
+    transport: new DefaultChatTransport({
+      api: "/api/chat",
+    }),
+  });
+
+  const { addMessage, setMessages, removeExpiredChat } = useChatStore();
+
+  useEffect(() => {
+    setMessages(messages as any);
+  }, [messages]);
+
+  useEffect(() => {
+    removeExpiredChat();
+  }, []);
 
   const [input, setInput] = useState("");
   const [files, setFiles] = useState<FileList | undefined>(undefined);
@@ -147,7 +157,7 @@ export default function ChatInterface() {
     },
   ];
 
-  const { pdfFile, pdfName, pdfDataUrl } = usePdfStore();
+  const { pdfFile, pdfName, pdfDataUrl } = usePdfDataStore();
 
   useEffect(() => {
     if (pdfFile && pdfDataUrl) {

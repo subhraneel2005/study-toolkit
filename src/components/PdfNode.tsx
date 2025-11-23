@@ -13,11 +13,12 @@ import { Button } from "./ui/button";
 import { MessagesSquare } from "lucide-react";
 import EmptyPDFstate from "./EmptyPDFstate";
 import ChatWithPdfSheet from "./ChatWithPdfSheet";
-import { usePdfStore } from "@/stores/usePdfStore";
 import { useState } from "react";
+import { usePdfDataStore } from "@/stores/usePdfDataStore";
 
 const PDFAgentNode = ({ data }: any) => {
-  const { pdfUploaded, setPdfUploaded } = usePdfStore();
+  const { pdfUploaded, setPdfUploaded } = usePdfDataStore();
+
   const [loading, setLoading] = useState(false);
 
   const handleChange = () => {
