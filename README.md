@@ -1,9 +1,9 @@
 <div align="center">
   <!-- <img src="https://raw.githubusercontent.com/subhraneel2005/genai-project-01/main/public/logo.png" alt="Research Agent Workspace" width="120" /> -->
   
-  # Research Agent Workspace
+  # Study toolkit for students
   
-   Agentic workspace for students and researchers to learn faster using AI
+Building a platform with a bunch of AI agents and tools that helps students in their academics.
    <br/>
    <br/>
   <img src="https://img.shields.io/badge/Next.js-000?logo=nextdotjs&logoColor=fff&style=flat" alt="Next.js" />
