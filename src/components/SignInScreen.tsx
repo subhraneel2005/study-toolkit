@@ -2,15 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff } from "lucide-react";
@@ -22,7 +13,14 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
-import { ActiveModal } from "@/stores/useModalStore";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 
 const signinSchema = z.object({
   email: z.email("Enter a valid email address").min(1, "Email is required"),
@@ -31,12 +29,7 @@ const signinSchema = z.object({
 
 type SigninFormData = z.infer<typeof signinSchema>;
 
-interface SigninProps {
-  activeModal: ActiveModal | null;
-  setActiveModal: (modal: ActiveModal | null) => void;
-}
-
-export default function Signin({ activeModal, setActiveModal }: SigninProps) {
+export default function SigninScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -56,8 +49,8 @@ export default function Signin({ activeModal, setActiveModal }: SigninProps) {
   const onSubmit = async (data: SigninFormData) => {
     setIsLoading(true);
     setError(null);
+
     try {
-      // Sign in with email and password
       const response = await authClient.signIn.email({
         email: data.email,
         password: data.password,
@@ -65,7 +58,6 @@ export default function Signin({ activeModal, setActiveModal }: SigninProps) {
       });
 
       if (response.error) {
-        // Check if error is due to unverified email
         if (
           response.error.message?.includes("verify") ||
           response.error.message?.includes("verification")
@@ -74,7 +66,6 @@ export default function Signin({ activeModal, setActiveModal }: SigninProps) {
             "Please verify your email first. We'll send you a new code."
           );
 
-          // Send OTP for verification
           await authClient.emailOtp.sendVerificationOtp({
             email: data.email,
             type: "email-verification",
@@ -89,13 +80,10 @@ export default function Signin({ activeModal, setActiveModal }: SigninProps) {
         return;
       }
 
-      // ✅ Successfully signed in!
       console.log("✅ Signed in successfully!");
-      setActiveModal(null); // Close the dialog
-      window.location.href = "/"; // Redirect to dashboard
+      window.location.href = "/";
     } catch (error: any) {
       setError(error.message || "Failed to sign in");
-      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -103,19 +91,15 @@ export default function Signin({ activeModal, setActiveModal }: SigninProps) {
 
   return (
     <>
-      <Dialog
-        open={activeModal === "signin"}
-        onOpenChange={(open) =>
-          setActiveModal(open ? ActiveModal.SIGNIN : null)
-        }
-      >
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Welcome back</DialogTitle>
-            <DialogDescription>
-              Enter your credentials to access your account.
-            </DialogDescription>
-          </DialogHeader>
+      <Card id="signin-screen" className="max-w-md w-full mx-auto mt-24">
+        <CardHeader>
+          <CardTitle>Welcome back</CardTitle>
+          <CardDescription>
+            Enter your credentials to access your account.
+          </CardDescription>
+        </CardHeader>
+
+        <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {error && (
               <Alert className="border-destructive/80 bg-destructive/5 text-destructive">
@@ -127,10 +111,9 @@ export default function Signin({ activeModal, setActiveModal }: SigninProps) {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label>Email</Label>
               <Input
                 {...register("email")}
-                id="email"
                 placeholder="you@example.com"
                 type="email"
               />
@@ -142,11 +125,9 @@ export default function Signin({ activeModal, setActiveModal }: SigninProps) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label>Password</Label>
               <div className="relative">
                 <Input
-                  className="bg-background"
-                  id="password"
                   placeholder="Enter your password"
                   type={showPassword ? "text" : "password"}
                   {...register("password")}
@@ -175,24 +156,19 @@ export default function Signin({ activeModal, setActiveModal }: SigninProps) {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <Checkbox
-                  id="remember"
                   checked={rememberMe}
                   onCheckedChange={(checked) =>
                     setRememberMe(checked as boolean)
                   }
                 />
-                <Label className="font-normal text-sm" htmlFor="remember">
-                  Remember me
-                </Label>
+                <Label className="font-normal text-sm">Remember me</Label>
               </div>
+
               <Button
                 type="button"
                 variant="link"
                 className="px-0 text-sm"
-                onClick={() => {
-                  // TODO: Implement forgot password flow
-                  console.log("Forgot password clicked");
-                }}
+                onClick={() => console.log("Forgot password clicked")}
               >
                 Forgot password?
               </Button>
@@ -236,20 +212,17 @@ export default function Signin({ activeModal, setActiveModal }: SigninProps) {
               Continue with Google
             </Button>
           </form>
-          <DialogFooter className="sm:justify-center">
-            <p className="text-center text-muted-foreground text-sm">
-              Don't have an account?{" "}
-              <button
-                className="font-medium underline cursor-pointer"
-                type="button"
-                onClick={() => setActiveModal(ActiveModal.SIGNUP)}
-              >
-                Sign up
-              </button>
-            </p>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+        </CardContent>
+
+        <CardFooter className="justify-center">
+          <p className="text-sm text-muted-foreground text-center">
+            Don&apos;t have an account?{" "}
+            <span className="underline cursor-pointer font-medium">
+              Sign up
+            </span>
+          </p>
+        </CardFooter>
+      </Card>
 
       {showOtpDialog && (
         <VerifyOtp

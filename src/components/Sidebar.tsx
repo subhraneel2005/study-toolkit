@@ -30,7 +30,7 @@ export function Sidebar() {
 
   const agents = [
     {
-      name: "Web Search Agent",
+      name: "Web Search tool",
       description: "Searches relevant research papers.",
       icon: <Search className="h-5 w-5 text-muted-foreground" />,
       type: "webSearchNode",
@@ -54,7 +54,7 @@ export function Sidebar() {
       },
     },
     {
-      name: "Summarizer Agent",
+      name: "Summarizer tool",
       description: "Summarizes long text or documents.",
       icon: <BookMarked className="h-5 w-5 text-muted-foreground" />,
       type: "summaryNode",
@@ -73,17 +73,6 @@ export function Sidebar() {
       defaultData: {
         label: "Flashcards Generator Agent",
         description: "Generates study flashcards automatically",
-      },
-    },
-    {
-      name: "Save Notes Agent",
-      description: "Saves notes to Notion or exports as PDF.",
-      icon: <FileText className="h-5 w-5 text-muted-foreground" />,
-      type: "agentNode",
-      href: "/tools/saveNotes",
-      defaultData: {
-        label: "Save Notes Agent",
-        description: "Saves notes to Notion or exports as PDF",
       },
     },
   ];
@@ -155,9 +144,7 @@ export function Sidebar() {
             </Link>
           ))}
         </ScrollArea>
-        <SheetFooter>
-          <MinimapToggle />
-        </SheetFooter>
+        <SheetFooter></SheetFooter>
       </SheetContent>
     </Sheet>
   );

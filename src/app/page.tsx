@@ -1,13 +1,20 @@
-import { Features } from "@/components/Features";
-import { Footer } from "@/components/Footer";
-import { Hero } from "@/components/Hero";
-import { Security } from "@/components/Security";
-import { Input } from "@/components/ui/input";
+"use client";
+import SigninScreen from "@/components/SignInScreen";
 import { Button } from "@/components/ui/button";
+import { useAuthStore } from "@/stores/useAuthStore";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const { user, isLoading } = useAuthStore();
+  const router = useRouter();
+
+  if (!isLoading && user) {
+    router.push("/tools");
+    return null;
+  }
+
   return (
-    <main className="min-h-screen w-full flex flex-col items-center justify-center">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center mt-40">
       <h1 className="text-4xl md:text-6xl font-bold tracking-[-2.5px]">
         Learn faster with AI
       </h1>
@@ -18,9 +25,21 @@ export default function Home() {
       </p>
 
       <div className="flex gap-4 justify-center items-center mt-6">
-        <Button>Get Started</Button>
-        <Button variant="outline">Signup</Button>
+        <Button
+          onClick={() =>
+            document.getElementById("signin-screen")?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            })
+          }
+        >
+          Get Started
+        </Button>
+
+        <Button variant="outline">Explore tools</Button>
       </div>
-    </main>
+
+      <SigninScreen />
+    </div>
   );
 }
