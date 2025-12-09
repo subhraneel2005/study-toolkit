@@ -109,7 +109,7 @@ const SummaryNode = ({ data }: any) => {
   };
 
   return (
-    <Card className="w-[450px] shadow-md border-muted bg-card">
+    <Card className="w-96 md:w-[500px] shadow-md border-muted bg-card">
       <CardHeader className="pb-2">
         <CardTitle className="text-base font-semibold">
           {data?.defaultData.label}

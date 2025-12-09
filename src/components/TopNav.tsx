@@ -54,20 +54,31 @@ export default function TopNav() {
           {isDark ? <Sun /> : <Moon />}
         </Button>
 
-        <Link href={"/canvas"}>
-          <Button variant="ghost" className="cursor-pointer ">
-            Canvas
-          </Button>
-        </Link>
-        <Link href={"/myApps"}>
-          <Button variant="ghost" className="cursor-pointer">
-            Apps
-          </Button>
-        </Link>
-        <Link href={"/profile"}>
-          <Button variant="ghost" className="cursor-pointer mr-3">
-            Profile
-          </Button>
+        {user && (
+          <>
+            {" "}
+            <Link href={"/tools"}>
+              <Button variant="ghost" className="cursor-pointer ">
+                Tools
+              </Button>
+            </Link>
+            <Link href={"/myApps"}>
+              <Button variant="ghost" className="cursor-pointer">
+                Apps
+              </Button>
+            </Link>
+            <Link href={"/profile"}>
+              <Button variant="ghost" className="cursor-pointer mr-3">
+                Profile
+              </Button>
+            </Link>
+          </>
+        )}
+        <Link
+          href={"/"}
+          className="font-bold text-xl tracking-[-1.2px] flex justify-center items-center mr-4"
+        >
+          Study toolkit
         </Link>
         {!isLoading && (user ? <UserHoverCard /> : <AuthModals />)}
       </nav>
