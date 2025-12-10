@@ -90,10 +90,10 @@ export default function SigninScreen() {
   };
 
   return (
-    <>
-      <Card id="signin-screen" className="max-w-md w-full mx-auto mt-24">
+    <div id="signin-screen" className="w-full">
+      <Card className="max-w-md w-full mx-auto mt-24">
         <CardHeader>
-          <CardTitle>Welcome back</CardTitle>
+          <CardTitle>Welcome back 👋</CardTitle>
           <CardDescription>
             Enter your credentials to access your account.
           </CardDescription>
@@ -190,7 +190,12 @@ export default function SigninScreen() {
               <Separator className="flex-1" />
             </div>
 
-            <Button className="w-full" variant="outline" type="button">
+            <Button
+              disabled={true}
+              className="w-full"
+              variant="outline"
+              type="button"
+            >
               <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                 <path
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -209,7 +214,7 @@ export default function SigninScreen() {
                   fill="#EA4335"
                 />
               </svg>
-              Continue with Google
+              Continue with Google (Soon)
             </Button>
           </form>
         </CardContent>
@@ -231,6 +236,6 @@ export default function SigninScreen() {
           onOpenChange={setShowOtpDialog}
         />
       )}
-    </>
+    </div>
   );
 }

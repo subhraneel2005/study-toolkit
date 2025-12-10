@@ -37,7 +37,17 @@ export default function Home() {
           Get Started
         </Button>
 
-        <Button variant="outline">Explore tools</Button>
+        <Button
+          onClick={() =>
+            document.getElementById("explore-tools")?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            })
+          }
+          variant="outline"
+        >
+          Explore tools
+        </Button>
       </div>
 
       <SigninScreen />

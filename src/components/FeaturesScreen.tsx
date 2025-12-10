@@ -59,7 +59,10 @@ const tools = [
 
 export default function FeaturesSection() {
   return (
-    <section className="relative w-full py-24 overflow-hidden bg-background">
+    <section
+      id="explore-tools"
+      className="relative w-full py-24 overflow-hidden bg-background"
+    >
       {/* Background decoration (Optional - remove if you want pure white/black) */}
       <div className="absolute inset-0 -z-10 h-full w-full bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
 
@@ -73,7 +76,7 @@ export default function FeaturesSection() {
             Built for Students
           </Badge>
 
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
+          <h2 className="text-4xl md:text-5xl font-bold tracking-[-1.5px]">
             Your Personal AI Study Agents
           </h2>
 
