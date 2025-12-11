@@ -35,6 +35,7 @@ import {
 } from "@/components/ai-elements/prompt-input";
 
 import {
+  Check,
   CopyIcon,
   ExternalLink,
   Loader2,
@@ -45,14 +46,15 @@ import {
   ThumbsUpIcon,
   X,
 } from "lucide-react";
-import { useChat } from "@ai-sdk/react";
-import { DefaultChatTransport } from "ai";
+import { UIMessage, useChat } from "@ai-sdk/react";
+import { DefaultChatTransport, UIDataTypes, UIMessagePart, UITools } from "ai";
 // import { Response } from "./ai-elements/response";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { useChatStore } from "@/stores/useChatStore";
 import { usePdfDataStore } from "@/stores/usePdfDataStore";
 import EmptyPDFstate from "./EmptyPDFstate";
+import { string } from "zod";
 
 async function convertFilesToDataURLs(
   files: FileList
@@ -84,8 +86,27 @@ async function convertFilesToDataURLs(
   );
 }
 
+function getMessageText(parts: UIMessagePart<UIDataTypes, UITools>[]) {
+  return (
+    parts
+      .filter((p) => p.type === "text" && typeof p.text === "string")
+      // @ts-expect-error TypeScript doesn't narrow the union type after filter, but we've checked p.text exists
+      .map((p) => p.text)
+      .join("\n\n")
+  );
+}
 export default function ChatInterface() {
   const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async (text: string) => {
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 800);
+  };
   const {
     pdfUploaded,
     setPdfUploaded,
@@ -194,6 +215,12 @@ export default function ChatInterface() {
     }
   }, [pdfFile, pdfName, pdfDataUrl]);
 
+  useEffect(() => {
+    if (status === "submitted") {
+      setAttachments([]);
+    }
+  }, [status]);
+
   if (!pdfUploaded) {
     return <EmptyPDFstate handleChange={handleChange} />;
   }
@@ -202,7 +229,7 @@ export default function ChatInterface() {
     <div className="bg-background border border-accent max-w-4xl mt-6 w-full px-4 py-4 rounded-2xl shadow-lg">
       {/* Conversation container */}
       <Conversation
-        className="relative w-full rounded-xl overflow-y-hidden"
+        className="relative w-full rounded-xl overflow-y-hidden bg-card"
         style={{ height: "500px" }}
       >
         <ConversationContent>
@@ -218,9 +245,9 @@ export default function ChatInterface() {
                 <Message
                   from={message.role}
                   key={message.id}
-                  className="flex-1 flex-col"
+                  className={`flex-1 flex-col `}
                 >
-                  <MessageContent className="mt-6">
+                  <MessageContent className="mt-6 ">
                     {message.parts.map((part, i) => {
                       switch (part.type) {
                         case "text":
@@ -293,32 +320,19 @@ export default function ChatInterface() {
                       >
                         <RefreshCcwIcon className="size-4" />
                       </MessageAction>
+
                       <MessageAction
-                        label="Like"
-                        onClick={() => {}}
-                        tooltip="Like this response"
+                        label={copied ? "Copied!" : "Copy"}
+                        onClick={() =>
+                          handleCopy(getMessageText(message.parts))
+                        }
+                        tooltip={copied ? "Copied!" : "Copy to clipboard"}
                       >
-                        <ThumbsUpIcon
-                          className="size-4"
-                          // fill={liked[message.key] ? "currentColor" : "none"}
-                        />
-                      </MessageAction>
-                      <MessageAction
-                        label="Dislike"
-                        onClick={() => {}}
-                        tooltip="Dislike this response"
-                      >
-                        <ThumbsDownIcon
-                          className="size-4"
-                          // fill={disliked[message.key] ? "currentColor" : "none"}
-                        />
-                      </MessageAction>
-                      <MessageAction
-                        label="Copy"
-                        onClick={() => {}}
-                        tooltip="Copy to clipboard"
-                      >
-                        <CopyIcon className="size-4" />
+                        {copied ? (
+                          <Check className="size-4 text-green-500" />
+                        ) : (
+                          <CopyIcon className="size-4" />
+                        )}
                       </MessageAction>
                     </MessageActions>
                   )}
