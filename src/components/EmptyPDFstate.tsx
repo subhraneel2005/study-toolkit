@@ -51,27 +51,31 @@ export default function EmptyPDFstate({
   };
 
   return (
-    <Empty>
-      <EmptyHeader>
-        <EmptyMedia variant="icon">
-          <Upload />
-        </EmptyMedia>
-        <EmptyTitle>No Pdf uploaded</EmptyTitle>
-        <EmptyDescription>Get started by uploading your pdf.</EmptyDescription>
-      </EmptyHeader>
-      <EmptyContent>
-        <input
-          type="file"
-          ref={fileInputRef}
-          className="hidden"
-          accept="application/pdf"
-          onChange={handleFileChange}
-        />
-        <Button onClick={handleUploadClick}>
-          <Upload />
-          Upload pdf
-        </Button>
-      </EmptyContent>
-    </Empty>
+    <div className="bg-background border border-accent max-w-4xl mt-6 w-full px-4 py-4 rounded-2xl shadow-lg">
+      <Empty>
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <Upload />
+          </EmptyMedia>
+          <EmptyTitle>No Pdf uploaded</EmptyTitle>
+          <EmptyDescription>
+            Get started by uploading your pdf.
+          </EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
+          <input
+            type="file"
+            ref={fileInputRef}
+            className="hidden"
+            accept="application/pdf"
+            onChange={handleFileChange}
+          />
+          <Button onClick={handleUploadClick}>
+            <Upload />
+            Upload pdf
+          </Button>
+        </EmptyContent>
+      </Empty>
+    </div>
   );
 }
