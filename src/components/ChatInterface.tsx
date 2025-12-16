@@ -264,7 +264,7 @@ export default function ChatInterface() {
   }
 
   return (
-    <div className="bg-background border border-accent max-w-4xl w-full px-4 py-4 rounded-2xl shadow-lg space-y-6 mt-12">
+    <div className="bg-background border border-accent md:max-w-4xl max-w-sm w-full px-4 py-4 rounded-2xl shadow-lg space-y-6 mt-12">
       {/* Conversation container */}
       <Conversation
         className="relative w-full rounded-xl overflow-y-hidden bg-card"
