@@ -7,9 +7,8 @@ import PageTransition from "@/clientWrapper/TransitionWrapper";
 import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
-  title: "GenAI Project 01",
-  description:
-    "A multimodel chat project with streaming and generative UI features.",
+  title: "Study Toolkit",
+  description: "Study",
 };
 
 export default function RootLayout({
@@ -19,7 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${GeistMono.className} antialiased`}>
+      <body
+        className={`${GeistMono.className} antialiased`}
+        suppressHydrationWarning
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

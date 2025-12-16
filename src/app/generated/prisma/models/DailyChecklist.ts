@@ -191,7 +191,7 @@ export type DailyChecklistWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"DailyChecklist"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyChecklist"> | Date | string
   tasks?: Prisma.TaskListRelationFilter
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type DailyChecklistOrderByWithRelationInput = {
@@ -202,7 +202,7 @@ export type DailyChecklistOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   tasks?: Prisma.TaskOrderByRelationAggregateInput
-  user?: Prisma.userOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type DailyChecklistWhereUniqueInput = Prisma.AtLeast<{
@@ -217,7 +217,7 @@ export type DailyChecklistWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"DailyChecklist"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyChecklist"> | Date | string
   tasks?: Prisma.TaskListRelationFilter
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "userId_date">
 
 export type DailyChecklistOrderByWithAggregationInput = {
@@ -251,7 +251,7 @@ export type DailyChecklistCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tasks?: Prisma.TaskCreateNestedManyWithoutDailyChecklistInput
-  user: Prisma.userCreateNestedOneWithoutDailyChecklistInput
+  user: Prisma.UserCreateNestedOneWithoutDailyChecklistInput
 }
 
 export type DailyChecklistUncheckedCreateInput = {
@@ -271,7 +271,7 @@ export type DailyChecklistUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.TaskUpdateManyWithoutDailyChecklistNestedInput
-  user?: Prisma.userUpdateOneRequiredWithoutDailyChecklistNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutDailyChecklistNestedInput
 }
 
 export type DailyChecklistUncheckedUpdateInput = {
@@ -479,7 +479,7 @@ export type DailyChecklistCreateWithoutTasksInput = {
   priority?: $Enums.Priority
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.userCreateNestedOneWithoutDailyChecklistInput
+  user: Prisma.UserCreateNestedOneWithoutDailyChecklistInput
 }
 
 export type DailyChecklistUncheckedCreateWithoutTasksInput = {
@@ -513,7 +513,7 @@ export type DailyChecklistUpdateWithoutTasksInput = {
   priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.userUpdateOneRequiredWithoutDailyChecklistNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutDailyChecklistNestedInput
 }
 
 export type DailyChecklistUncheckedUpdateWithoutTasksInput = {
@@ -598,7 +598,7 @@ export type DailyChecklistSelect<ExtArgs extends runtime.Types.Extensions.Intern
   createdAt?: boolean
   updatedAt?: boolean
   tasks?: boolean | Prisma.DailyChecklist$tasksArgs<ExtArgs>
-  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.DailyChecklistCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dailyChecklist"]>
 
@@ -609,7 +609,7 @@ export type DailyChecklistSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   priority?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dailyChecklist"]>
 
 export type DailyChecklistSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -619,7 +619,7 @@ export type DailyChecklistSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   priority?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dailyChecklist"]>
 
 export type DailyChecklistSelectScalar = {
@@ -634,21 +634,21 @@ export type DailyChecklistSelectScalar = {
 export type DailyChecklistOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "date" | "priority" | "createdAt" | "updatedAt", ExtArgs["result"]["dailyChecklist"]>
 export type DailyChecklistInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tasks?: boolean | Prisma.DailyChecklist$tasksArgs<ExtArgs>
-  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.DailyChecklistCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DailyChecklistIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type DailyChecklistIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $DailyChecklistPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "DailyChecklist"
   objects: {
     tasks: Prisma.$TaskPayload<ExtArgs>[]
-    user: Prisma.$userPayload<ExtArgs>
+    user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1052,7 +1052,7 @@ readonly fields: DailyChecklistFieldRefs;
 export interface Prisma__DailyChecklistClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   tasks<T extends Prisma.DailyChecklist$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DailyChecklist$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  user<T extends Prisma.userDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.userDefaultArgs<ExtArgs>>): Prisma.Prisma__userClient<runtime.Types.Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

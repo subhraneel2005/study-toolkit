@@ -18,6 +18,8 @@ import {
   Notebook,
   FileText,
   HelpCircle,
+  Pen,
+  SquareCheckBig,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import MinimapToggle from "./MinimapToggle";
@@ -75,18 +77,30 @@ export function Sidebar() {
         description: "Generates study flashcards automatically",
       },
     },
-  ];
+    {
+      name: "Daily Logs",
+      description: "Document your daily work and learnings here.",
+      icon: <Pen className="h-5 w-5 text-muted-foreground" />,
+      type: "agentNode",
+      href: "/tools/dailyLogs",
+      defaultData: {
+        label: "Daily Logs",
+        description: "Document your daily work and learnings here",
+      },
+    },
 
-  // const onDragStart = (event: React.DragEvent, agent: (typeof agents)[0]) => {
-  //   event.dataTransfer.setData(
-  //     "application/reactflow",
-  //     JSON.stringify({
-  //       type: agent.type,
-  //       data: agent.defaultData,
-  //     })
-  //   );
-  //   event.dataTransfer.effectAllowed = "move";
-  // };
+    {
+      name: "Daily Checklist",
+      description: "Finish your todos with priority.",
+      icon: <SquareCheckBig className="h-5 w-5 text-muted-foreground" />,
+      type: "agentNode",
+      href: "/tools/dailyChecklist",
+      defaultData: {
+        label: "Daily Checklist",
+        description: "Finish your todos with priority",
+      },
+    },
+  ];
 
   return (
     <Sheet modal={false} open={open} onOpenChange={setOpen}>

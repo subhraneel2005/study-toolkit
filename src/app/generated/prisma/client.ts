@@ -40,10 +40,10 @@ export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts exten
 export { Prisma }
 
 /**
- * Model user
+ * Model User
  * 
  */
-export type user = Prisma.userModel
+export type User = Prisma.UserModel
 /**
  * Model DailyLogs
  * 
@@ -65,17 +65,17 @@ export type DailyChecklist = Prisma.DailyChecklistModel
  */
 export type Task = Prisma.TaskModel
 /**
- * Model session
+ * Model Session
  * 
  */
-export type session = Prisma.sessionModel
+export type Session = Prisma.SessionModel
 /**
- * Model account
+ * Model Account
  * 
  */
-export type account = Prisma.accountModel
+export type Account = Prisma.AccountModel
 /**
- * Model verification
+ * Model Verification
  * 
  */
-export type verification = Prisma.verificationModel
+export type Verification = Prisma.VerificationModel
