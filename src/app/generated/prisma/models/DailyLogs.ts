@@ -191,7 +191,7 @@ export type DailyLogsWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"DailyLogs"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyLogs"> | Date | string
   categories?: Prisma.CategoryListRelationFilter
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type DailyLogsOrderByWithRelationInput = {
@@ -202,7 +202,7 @@ export type DailyLogsOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   categories?: Prisma.CategoryOrderByRelationAggregateInput
-  user?: Prisma.userOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type DailyLogsWhereUniqueInput = Prisma.AtLeast<{
@@ -217,7 +217,7 @@ export type DailyLogsWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"DailyLogs"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyLogs"> | Date | string
   categories?: Prisma.CategoryListRelationFilter
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "userId_date">
 
 export type DailyLogsOrderByWithAggregationInput = {
@@ -251,7 +251,7 @@ export type DailyLogsCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   categories?: Prisma.CategoryCreateNestedManyWithoutDailyLogsInput
-  user: Prisma.userCreateNestedOneWithoutDailyLogsInput
+  user: Prisma.UserCreateNestedOneWithoutDailyLogsInput
 }
 
 export type DailyLogsUncheckedCreateInput = {
@@ -271,7 +271,7 @@ export type DailyLogsUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.CategoryUpdateManyWithoutDailyLogsNestedInput
-  user?: Prisma.userUpdateOneRequiredWithoutDailyLogsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutDailyLogsNestedInput
 }
 
 export type DailyLogsUncheckedUpdateInput = {
@@ -494,7 +494,7 @@ export type DailyLogsCreateWithoutCategoriesInput = {
   logs: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.userCreateNestedOneWithoutDailyLogsInput
+  user: Prisma.UserCreateNestedOneWithoutDailyLogsInput
 }
 
 export type DailyLogsUncheckedCreateWithoutCategoriesInput = {
@@ -567,7 +567,7 @@ export type DailyLogsUpdateWithoutCategoriesInput = {
   logs?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.userUpdateOneRequiredWithoutDailyLogsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutDailyLogsNestedInput
 }
 
 export type DailyLogsUncheckedUpdateWithoutCategoriesInput = {
@@ -627,7 +627,7 @@ export type DailyLogsSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   createdAt?: boolean
   updatedAt?: boolean
   categories?: boolean | Prisma.DailyLogs$categoriesArgs<ExtArgs>
-  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.DailyLogsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dailyLogs"]>
 
@@ -638,7 +638,7 @@ export type DailyLogsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   logs?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dailyLogs"]>
 
 export type DailyLogsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -648,7 +648,7 @@ export type DailyLogsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   logs?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dailyLogs"]>
 
 export type DailyLogsSelectScalar = {
@@ -663,21 +663,21 @@ export type DailyLogsSelectScalar = {
 export type DailyLogsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "date" | "logs" | "createdAt" | "updatedAt", ExtArgs["result"]["dailyLogs"]>
 export type DailyLogsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   categories?: boolean | Prisma.DailyLogs$categoriesArgs<ExtArgs>
-  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.DailyLogsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DailyLogsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type DailyLogsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $DailyLogsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "DailyLogs"
   objects: {
     categories: Prisma.$CategoryPayload<ExtArgs>[]
-    user: Prisma.$userPayload<ExtArgs>
+    user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1081,7 +1081,7 @@ readonly fields: DailyLogsFieldRefs;
 export interface Prisma__DailyLogsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   categories<T extends Prisma.DailyLogs$categoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DailyLogs$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  user<T extends Prisma.userDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.userDefaultArgs<ExtArgs>>): Prisma.Prisma__userClient<runtime.Types.Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
