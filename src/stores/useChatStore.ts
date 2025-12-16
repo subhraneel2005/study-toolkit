@@ -8,6 +8,8 @@ interface ChatStore {
   setMessages: (messages: ChatMessage[]) => void;
   clearMessages: () => void;
   removeExpiredChat: () => void;
+  pdfAddedInChat: boolean;
+  setPdfAddedInChat: (value: boolean) => void;
 }
 
 const ONE_DAY = 24 * 60 * 60 * 1000;
@@ -29,10 +31,15 @@ export const useChatStore = create<ChatStore>()(
           messages: get().messages.filter((m) => now - m.createdAt < ONE_DAY),
         });
       },
+      pdfAddedInChat: false,
+      setPdfAddedInChat: (value) => set({ pdfAddedInChat: value }),
     }),
     {
       name: "chat-store",
-      partialize: (state) => ({ messages: state.messages }),
+      partialize: (state) => ({
+        messages: state.messages,
+        pdfAddedInChat: state.pdfAddedInChat,
+      }),
     }
   )
 );

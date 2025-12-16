@@ -20,8 +20,6 @@ import {
   ReasoningTrigger,
 } from "@/components/ai-elements/reasoning";
 
-import { Action, Actions } from "@/components/ai-elements/actions";
-
 import {
   PromptInput,
   PromptInputSubmit,
@@ -40,21 +38,34 @@ import {
   ExternalLink,
   Loader2,
   MessageSquare,
+  Plus,
   PlusIcon,
   RefreshCcwIcon,
-  ThumbsDownIcon,
-  ThumbsUpIcon,
+  Trash2,
   X,
 } from "lucide-react";
 import { UIMessage, useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, UIDataTypes, UIMessagePart, UITools } from "ai";
-// import { Response } from "./ai-elements/response";
+
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { useChatStore } from "@/stores/useChatStore";
 import { usePdfDataStore } from "@/stores/usePdfDataStore";
 import EmptyPDFstate from "./EmptyPDFstate";
-import { string } from "zod";
+import { ButtonGroup, ButtonGroupSeparator } from "./ui/button-group";
+import { Dialog, DialogContent } from "./ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useRouter } from "next/navigation";
 
 async function convertFilesToDataURLs(
   files: FileList
@@ -118,11 +129,22 @@ export default function ChatInterface() {
     setPdfName,
   } = usePdfDataStore();
 
-  const { messages, status, sendMessage, regenerate, stop } = useChat({
-    transport: new DefaultChatTransport({
-      api: "/api/chat",
-    }),
-  });
+  const {
+    addMessage,
+    setMessages: setStoredMessages,
+    removeExpiredChat,
+    messages: storedMessages,
+    pdfAddedInChat,
+    setPdfAddedInChat,
+  } = useChatStore();
+
+  const { messages, status, sendMessage, regenerate, stop, setMessages } =
+    useChat({
+      transport: new DefaultChatTransport({
+        api: "/api/chat",
+      }),
+      messages: storedMessages as UIMessage[], // Load persisted messages on mount
+    });
 
   const handleChange = () => {
     setLoading(true);
@@ -134,15 +156,14 @@ export default function ChatInterface() {
       setLoading(false);
     }
   };
-  const { addMessage, setMessages, removeExpiredChat } = useChatStore();
 
   useEffect(() => {
-    setMessages(messages as any);
-  }, [messages]);
+    setStoredMessages(messages as any);
+  }, [messages, setStoredMessages]);
 
-  useEffect(() => {
-    removeExpiredChat();
-  }, []);
+  // useEffect(() => {
+  //   removeExpiredChat();
+  // }, []);
 
   const [input, setInput] = useState("");
   const [files, setFiles] = useState<FileList | undefined>(undefined);
@@ -174,6 +195,8 @@ export default function ChatInterface() {
         role: "user",
         parts: [{ type: "text", text: input }, ...fileParts],
       });
+
+      setPdfAddedInChat(true);
 
       setInput("");
       // setAttachments([]);
@@ -221,12 +244,27 @@ export default function ChatInterface() {
     }
   }, [status]);
 
-  if (!pdfUploaded) {
+  const router = useRouter();
+  const disposeCurrentChatMessages = () => {
+    setLoading(true);
+    try {
+      setStoredMessages([]);
+      setMessages([]);
+      setPdfAddedInChat(false);
+      router.refresh();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!pdfUploaded && !pdfAddedInChat) {
     return <EmptyPDFstate handleChange={handleChange} />;
   }
 
   return (
-    <div className="bg-background border border-accent max-w-4xl mt-6 w-full px-4 py-4 rounded-2xl shadow-lg">
+    <div className="bg-background border border-accent max-w-4xl w-full px-4 py-4 rounded-2xl shadow-lg space-y-6 mt-12">
       {/* Conversation container */}
       <Conversation
         className="relative w-full rounded-xl overflow-y-hidden bg-card"
@@ -434,6 +472,42 @@ export default function ChatInterface() {
           </PromptInputTools>
         </PromptInputFooter>
       </PromptInput>
+
+      <footer className="">
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <ButtonGroup>
+              <Button variant={"destructive"}>
+                <Trash2 />
+              </Button>
+              <ButtonGroupSeparator />
+              <Button variant={"destructive"}>Dispose chat</Button>
+            </ButtonGroup>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <div className="flex items-center gap-2">
+                <Trash2 className="size-5 text-destructive" />
+                <AlertDialogTitle>Delete Chat</AlertDialogTitle>
+              </div>
+              <AlertDialogDescription>
+                This will permanently delete this chat and all of its messages.
+                This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                disabled={loading}
+                onClick={() => disposeCurrentChatMessages()}
+                className="bg-destructive text-white hover:bg-destructive/90"
+              >
+                {loading ? "Disposing..." : "Dispose chat"}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </footer>
     </div>
   );
 }
