@@ -32,6 +32,28 @@ export function Sidebar() {
 
   const agents = [
     {
+      name: "Daily Logs",
+      description: "Document your daily work and learnings here.",
+      icon: <Pen className="h-5 w-5 text-muted-foreground" />,
+      type: "agentNode",
+      href: "/tools/dailyLogs",
+      defaultData: {
+        label: "Daily Logs",
+        description: "Document your daily work and learnings here",
+      },
+    },
+    {
+      name: "Daily Checklist",
+      description: "Finish your todos with priority.",
+      icon: <SquareCheckBig className="h-5 w-5 text-muted-foreground" />,
+      type: "agentNode",
+      href: "/tools/dailyChecklist",
+      defaultData: {
+        label: "Daily Checklist",
+        description: "Finish your todos with priority",
+      },
+    },
+    {
       name: "Web Search tool",
       description: "Searches relevant research papers.",
       icon: <Search className="h-5 w-5 text-muted-foreground" />,
@@ -75,29 +97,6 @@ export function Sidebar() {
       defaultData: {
         label: "Flashcards Generator Agent",
         description: "Generates study flashcards automatically",
-      },
-    },
-    {
-      name: "Daily Logs",
-      description: "Document your daily work and learnings here.",
-      icon: <Pen className="h-5 w-5 text-muted-foreground" />,
-      type: "agentNode",
-      href: "/tools/dailyLogs",
-      defaultData: {
-        label: "Daily Logs",
-        description: "Document your daily work and learnings here",
-      },
-    },
-
-    {
-      name: "Daily Checklist",
-      description: "Finish your todos with priority.",
-      icon: <SquareCheckBig className="h-5 w-5 text-muted-foreground" />,
-      type: "agentNode",
-      href: "/tools/dailyChecklist",
-      defaultData: {
-        label: "Daily Checklist",
-        description: "Finish your todos with priority",
       },
     },
   ];

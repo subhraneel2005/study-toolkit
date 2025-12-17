@@ -28,7 +28,7 @@ export type DailyLogsMinAggregateOutputType = {
   id: string | null
   userId: string | null
   date: Date | null
-  logs: string | null
+  log: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -37,7 +37,7 @@ export type DailyLogsMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   date: Date | null
-  logs: string | null
+  log: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -46,7 +46,7 @@ export type DailyLogsCountAggregateOutputType = {
   id: number
   userId: number
   date: number
-  logs: number
+  log: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -57,7 +57,7 @@ export type DailyLogsMinAggregateInputType = {
   id?: true
   userId?: true
   date?: true
-  logs?: true
+  log?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -66,7 +66,7 @@ export type DailyLogsMaxAggregateInputType = {
   id?: true
   userId?: true
   date?: true
-  logs?: true
+  log?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -75,7 +75,7 @@ export type DailyLogsCountAggregateInputType = {
   id?: true
   userId?: true
   date?: true
-  logs?: true
+  log?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -157,7 +157,7 @@ export type DailyLogsGroupByOutputType = {
   id: string
   userId: string
   date: Date
-  logs: string
+  log: string
   createdAt: Date
   updatedAt: Date
   _count: DailyLogsCountAggregateOutputType | null
@@ -187,7 +187,7 @@ export type DailyLogsWhereInput = {
   id?: Prisma.StringFilter<"DailyLogs"> | string
   userId?: Prisma.StringFilter<"DailyLogs"> | string
   date?: Prisma.DateTimeFilter<"DailyLogs"> | Date | string
-  logs?: Prisma.StringFilter<"DailyLogs"> | string
+  log?: Prisma.StringFilter<"DailyLogs"> | string
   createdAt?: Prisma.DateTimeFilter<"DailyLogs"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyLogs"> | Date | string
   categories?: Prisma.CategoryListRelationFilter
@@ -198,7 +198,7 @@ export type DailyLogsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   date?: Prisma.SortOrder
-  logs?: Prisma.SortOrder
+  log?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   categories?: Prisma.CategoryOrderByRelationAggregateInput
@@ -213,7 +213,7 @@ export type DailyLogsWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.DailyLogsWhereInput | Prisma.DailyLogsWhereInput[]
   userId?: Prisma.StringFilter<"DailyLogs"> | string
   date?: Prisma.DateTimeFilter<"DailyLogs"> | Date | string
-  logs?: Prisma.StringFilter<"DailyLogs"> | string
+  log?: Prisma.StringFilter<"DailyLogs"> | string
   createdAt?: Prisma.DateTimeFilter<"DailyLogs"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyLogs"> | Date | string
   categories?: Prisma.CategoryListRelationFilter
@@ -224,7 +224,7 @@ export type DailyLogsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   date?: Prisma.SortOrder
-  logs?: Prisma.SortOrder
+  log?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.DailyLogsCountOrderByAggregateInput
@@ -239,7 +239,7 @@ export type DailyLogsScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"DailyLogs"> | string
   userId?: Prisma.StringWithAggregatesFilter<"DailyLogs"> | string
   date?: Prisma.DateTimeWithAggregatesFilter<"DailyLogs"> | Date | string
-  logs?: Prisma.StringWithAggregatesFilter<"DailyLogs"> | string
+  log?: Prisma.StringWithAggregatesFilter<"DailyLogs"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"DailyLogs"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"DailyLogs"> | Date | string
 }
@@ -247,7 +247,7 @@ export type DailyLogsScalarWhereWithAggregatesInput = {
 export type DailyLogsCreateInput = {
   id?: string
   date: Date | string
-  logs: string
+  log: string
   createdAt?: Date | string
   updatedAt?: Date | string
   categories?: Prisma.CategoryCreateNestedManyWithoutDailyLogsInput
@@ -258,7 +258,7 @@ export type DailyLogsUncheckedCreateInput = {
   id?: string
   userId: string
   date: Date | string
-  logs: string
+  log: string
   createdAt?: Date | string
   updatedAt?: Date | string
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutDailyLogsInput
@@ -267,7 +267,7 @@ export type DailyLogsUncheckedCreateInput = {
 export type DailyLogsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logs?: Prisma.StringFieldUpdateOperationsInput | string
+  log?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.CategoryUpdateManyWithoutDailyLogsNestedInput
@@ -278,7 +278,7 @@ export type DailyLogsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logs?: Prisma.StringFieldUpdateOperationsInput | string
+  log?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutDailyLogsNestedInput
@@ -288,7 +288,7 @@ export type DailyLogsCreateManyInput = {
   id?: string
   userId: string
   date: Date | string
-  logs: string
+  log: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -296,7 +296,7 @@ export type DailyLogsCreateManyInput = {
 export type DailyLogsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logs?: Prisma.StringFieldUpdateOperationsInput | string
+  log?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -305,7 +305,7 @@ export type DailyLogsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logs?: Prisma.StringFieldUpdateOperationsInput | string
+  log?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -329,7 +329,7 @@ export type DailyLogsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   date?: Prisma.SortOrder
-  logs?: Prisma.SortOrder
+  log?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -338,7 +338,7 @@ export type DailyLogsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   date?: Prisma.SortOrder
-  logs?: Prisma.SortOrder
+  log?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -347,7 +347,7 @@ export type DailyLogsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   date?: Prisma.SortOrder
-  logs?: Prisma.SortOrder
+  log?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -435,7 +435,7 @@ export type DailyLogsUncheckedUpdateManyWithoutCategoriesNestedInput = {
 export type DailyLogsCreateWithoutUserInput = {
   id?: string
   date: Date | string
-  logs: string
+  log: string
   createdAt?: Date | string
   updatedAt?: Date | string
   categories?: Prisma.CategoryCreateNestedManyWithoutDailyLogsInput
@@ -444,7 +444,7 @@ export type DailyLogsCreateWithoutUserInput = {
 export type DailyLogsUncheckedCreateWithoutUserInput = {
   id?: string
   date: Date | string
-  logs: string
+  log: string
   createdAt?: Date | string
   updatedAt?: Date | string
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutDailyLogsInput
@@ -483,7 +483,7 @@ export type DailyLogsScalarWhereInput = {
   id?: Prisma.StringFilter<"DailyLogs"> | string
   userId?: Prisma.StringFilter<"DailyLogs"> | string
   date?: Prisma.DateTimeFilter<"DailyLogs"> | Date | string
-  logs?: Prisma.StringFilter<"DailyLogs"> | string
+  log?: Prisma.StringFilter<"DailyLogs"> | string
   createdAt?: Prisma.DateTimeFilter<"DailyLogs"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyLogs"> | Date | string
 }
@@ -491,7 +491,7 @@ export type DailyLogsScalarWhereInput = {
 export type DailyLogsCreateWithoutCategoriesInput = {
   id?: string
   date: Date | string
-  logs: string
+  log: string
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutDailyLogsInput
@@ -501,7 +501,7 @@ export type DailyLogsUncheckedCreateWithoutCategoriesInput = {
   id?: string
   userId: string
   date: Date | string
-  logs: string
+  log: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -530,7 +530,7 @@ export type DailyLogsUpdateManyWithWhereWithoutCategoriesInput = {
 export type DailyLogsCreateManyUserInput = {
   id?: string
   date: Date | string
-  logs: string
+  log: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -538,7 +538,7 @@ export type DailyLogsCreateManyUserInput = {
 export type DailyLogsUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logs?: Prisma.StringFieldUpdateOperationsInput | string
+  log?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.CategoryUpdateManyWithoutDailyLogsNestedInput
@@ -547,7 +547,7 @@ export type DailyLogsUpdateWithoutUserInput = {
 export type DailyLogsUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logs?: Prisma.StringFieldUpdateOperationsInput | string
+  log?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutDailyLogsNestedInput
@@ -556,7 +556,7 @@ export type DailyLogsUncheckedUpdateWithoutUserInput = {
 export type DailyLogsUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logs?: Prisma.StringFieldUpdateOperationsInput | string
+  log?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -564,7 +564,7 @@ export type DailyLogsUncheckedUpdateManyWithoutUserInput = {
 export type DailyLogsUpdateWithoutCategoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logs?: Prisma.StringFieldUpdateOperationsInput | string
+  log?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutDailyLogsNestedInput
@@ -574,7 +574,7 @@ export type DailyLogsUncheckedUpdateWithoutCategoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logs?: Prisma.StringFieldUpdateOperationsInput | string
+  log?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -583,7 +583,7 @@ export type DailyLogsUncheckedUpdateManyWithoutCategoriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logs?: Prisma.StringFieldUpdateOperationsInput | string
+  log?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -623,7 +623,7 @@ export type DailyLogsSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   id?: boolean
   userId?: boolean
   date?: boolean
-  logs?: boolean
+  log?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   categories?: boolean | Prisma.DailyLogs$categoriesArgs<ExtArgs>
@@ -635,7 +635,7 @@ export type DailyLogsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   id?: boolean
   userId?: boolean
   date?: boolean
-  logs?: boolean
+  log?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -645,7 +645,7 @@ export type DailyLogsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   id?: boolean
   userId?: boolean
   date?: boolean
-  logs?: boolean
+  log?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -655,12 +655,12 @@ export type DailyLogsSelectScalar = {
   id?: boolean
   userId?: boolean
   date?: boolean
-  logs?: boolean
+  log?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DailyLogsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "date" | "logs" | "createdAt" | "updatedAt", ExtArgs["result"]["dailyLogs"]>
+export type DailyLogsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "date" | "log" | "createdAt" | "updatedAt", ExtArgs["result"]["dailyLogs"]>
 export type DailyLogsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   categories?: boolean | Prisma.DailyLogs$categoriesArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -683,7 +683,7 @@ export type $DailyLogsPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     id: string
     userId: string
     date: Date
-    logs: string
+    log: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["dailyLogs"]>
@@ -1114,7 +1114,7 @@ export interface DailyLogsFieldRefs {
   readonly id: Prisma.FieldRef<"DailyLogs", 'String'>
   readonly userId: Prisma.FieldRef<"DailyLogs", 'String'>
   readonly date: Prisma.FieldRef<"DailyLogs", 'DateTime'>
-  readonly logs: Prisma.FieldRef<"DailyLogs", 'String'>
+  readonly log: Prisma.FieldRef<"DailyLogs", 'String'>
   readonly createdAt: Prisma.FieldRef<"DailyLogs", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"DailyLogs", 'DateTime'>
 }
