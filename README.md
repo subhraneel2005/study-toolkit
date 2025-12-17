@@ -16,9 +16,6 @@ Building a platform with a bunch of AI agents and tools that helps students in t
   <img src="https://img.shields.io/badge/Better%20Auth-FFF?logo=betterauth&logoColor=000&style=flat" alt="Better-Auth" />
   <img src="https://img.shields.io/badge/Prisma-2D3748?logo=prisma&logoColor=fff&style=flat" alt="Prisma" />
 
-  <br />
-    <img src="https://github.com/subhraneel2005/Research-Agent-Workspace/blob/main/public/landing1.png?raw=true" alt="Landing page Banner" width="100%" />
-  <br />
   
 </div>
 
