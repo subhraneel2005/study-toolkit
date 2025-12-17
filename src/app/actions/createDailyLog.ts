@@ -7,6 +7,7 @@ import {
   DailyLog,
   dailyLogSchema,
 } from "@/zodSchemas/dailyLog.schema";
+import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 
 export async function createDailyLog(payload: DailyLog) {
@@ -37,6 +38,8 @@ export async function createDailyLog(payload: DailyLog) {
         },
       },
     });
+    revalidatePath("/tools/dailyLogs");
+    return { success: true };
   } catch (error) {
     console.error("createDailyLog error:", error);
     throw new Error("DATABASE_ERROR");

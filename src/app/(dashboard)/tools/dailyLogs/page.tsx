@@ -1,9 +1,9 @@
-import DailyLogScreen from "@/components/DailyLogs";
+import DailyLogScreen from "@/components/dailyLog/DailyLogs";
 import React from "react";
 
 export default function Page() {
   return (
-    <div className="">
+    <div>
       <DailyLogScreen />
     </div>
   );
