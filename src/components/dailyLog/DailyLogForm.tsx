@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -13,19 +13,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
-import {
-  CATEGORIES,
-  Category,
-  DailyLog,
-  dailyLogSchema,
-} from "@/zodSchemas/dailyLog.schema";
+import { CATEGORIES, Category, DailyLog } from "@/zodSchemas/dailyLog.schema";
 import { createDailyLog } from "@/app/actions/createDailyLog";
 import { toast } from "sonner";
-import { Spinner } from "./ui/spinner";
+import { Spinner } from "../ui/spinner";
 
-export default function DailyLogScreen() {
+export default function DailyLogForm({ currentDate }: { currentDate: Date }) {
   const [logContent, setLogContent] = useState<DailyLog["log"]>("");
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
@@ -38,25 +31,21 @@ export default function DailyLogScreen() {
     );
   };
 
-  dayjs.extend(utc);
-  dayjs.extend(timezone);
-
-  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-  const currentDate = dayjs().tz(userTimezone).startOf("day").toDate();
   const formattedDate = dayjs(currentDate).format("DD MMM YYYY");
 
   const handleSubmitLog = async () => {
     try {
       setLoading(true);
-      await createDailyLog({
+      const res = await createDailyLog({
         log: logContent,
         categories: selectedCategories,
         date: currentDate,
       });
-      toast.success("LOG ADDED", {
-        description: "Daily log successfully added",
-      });
+      if (res.success) {
+        toast.success("LOG ADDED", {
+          description: "Daily log successfully added",
+        });
+      }
     } catch (error) {
       if (error instanceof Error) {
         switch (error.message) {
