@@ -12,38 +12,25 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-
-const CATEGORIES = [
-  "Deep Work",
-  "Learning",
-  "Meeting",
-  "Planning",
-  "Review",
-  "Projects",
-  "DSA",
-];
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import {
+  CATEGORIES,
+  Category,
+  DailyLog,
+  dailyLogSchema,
+} from "@/zodSchemas/dailyLog.schema";
+import { createDailyLog } from "@/app/actions/createDailyLog";
+import { toast } from "sonner";
+import { Spinner } from "./ui/spinner";
 
 export default function DailyLogScreen() {
-  const [logContent, setLogContent] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [hasExistingLog, setHasExistingLog] = useState(false);
+  const [logContent, setLogContent] = useState<DailyLog["log"]>("");
+  const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  // Simulation: Check for existing data on mount
-  useEffect(() => {
-    // In a real app, this would be an API call
-    const mockExistingLog = {
-      content: "", // Empty for this demo to show "Save", change to test "Update"
-      categories: [],
-    };
-
-    if (mockExistingLog.content) {
-      setLogContent(mockExistingLog.content);
-      setSelectedCategories(mockExistingLog.categories);
-      setHasExistingLog(true);
-    }
-  }, []);
-
-  const toggleCategory = (category: string) => {
+  const toggleCategory = (category: Category) => {
     setSelectedCategories((prev) =>
       prev.includes(category)
         ? prev.filter((c) => c !== category)
@@ -51,11 +38,54 @@ export default function DailyLogScreen() {
     );
   };
 
-  const currentDate = new Intl.DateTimeFormat("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-  }).format(new Date());
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
+
+  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  const currentDate = dayjs().tz(userTimezone).startOf("day").toDate();
+  const formattedDate = dayjs(currentDate).format("DD MMM YYYY");
+
+  const handleSubmitLog = async () => {
+    try {
+      setLoading(true);
+      await createDailyLog({
+        log: logContent,
+        categories: selectedCategories,
+        date: currentDate,
+      });
+      toast.success("LOG ADDED", {
+        description: "Daily log successfully added",
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        switch (error.message) {
+          case "UNAUTHORIZED":
+            toast.error("UNAUTHORIZED", {
+              description: "Please login to perform this action",
+            });
+            break;
+
+          case "INVALID_INPUT":
+            toast.error("INVALID_INPUT", {
+              description: "Invalid form data",
+            });
+            break;
+
+          case "DATABASE_ERROR":
+            toast.error("DATABASE_ERROR", {
+              description: "Failed to save log",
+            });
+            break;
+
+          default:
+            toast.error("Something went wrong");
+        }
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen w-full bg-background p-6 flex flex-col items-center justify-center">
@@ -65,7 +95,7 @@ export default function DailyLogScreen() {
           <h1 className="text-3xl font-bold text-foreground tracking-[-1.4px]">
             Daily Log
           </h1>
-          <p className="text-sm text-muted-foreground">{currentDate}</p>
+          <p className="text-sm text-muted-foreground">{formattedDate}</p>
         </header>
 
         {/* Main Card */}
@@ -111,8 +141,20 @@ export default function DailyLogScreen() {
           </CardContent>
 
           <CardFooter>
-            <Button className="w-full" size="default">
-              {hasExistingLog ? "Update Log" : "Save Log"}
+            <Button
+              onClick={() => handleSubmitLog()}
+              className="w-full"
+              size="default"
+              disabled={loading}
+            >
+              {loading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <span>Saving</span>
+                  <Spinner />
+                </div>
+              ) : (
+                "Save Log"
+              )}
             </Button>
           </CardFooter>
         </Card>

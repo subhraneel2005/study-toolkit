@@ -1062,7 +1062,7 @@ export const DailyLogsScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   date: 'date',
-  logs: 'logs',
+  log: 'log',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

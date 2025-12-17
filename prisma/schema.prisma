@@ -33,7 +33,7 @@ model DailyLogs {
   userId String
 
   date       DateTime
-  logs       String     @db.Text
+  log        String     @db.Text
   categories Category[]
 
   createdAt DateTime @default(now())
@@ -46,7 +46,7 @@ model DailyLogs {
 model Category {
   id   String @id @default(uuid())
   name String
-  slug String
+  slug String @unique
 
   dailyLogs DailyLogs[]
 

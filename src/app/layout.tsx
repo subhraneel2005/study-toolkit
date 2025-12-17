@@ -5,6 +5,7 @@ import { GeistMono } from "geist/font/mono";
 import NavWrapper from "@/clientWrapper/NavWrapper";
 import PageTransition from "@/clientWrapper/TransitionWrapper";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Study Toolkit",
@@ -28,6 +29,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Toaster position="top-right" richColors />
           <NavWrapper />
           <PageTransition>{children}</PageTransition>
         </ThemeProvider>
