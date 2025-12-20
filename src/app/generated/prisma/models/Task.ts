@@ -27,7 +27,8 @@ export type AggregateTask = {
 export type TaskMinAggregateOutputType = {
   id: string | null
   dailyChecklistId: string | null
-  completed: boolean | null
+  priority: $Enums.Priority | null
+  isCompleted: boolean | null
   taskContent: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -36,7 +37,8 @@ export type TaskMinAggregateOutputType = {
 export type TaskMaxAggregateOutputType = {
   id: string | null
   dailyChecklistId: string | null
-  completed: boolean | null
+  priority: $Enums.Priority | null
+  isCompleted: boolean | null
   taskContent: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -45,7 +47,8 @@ export type TaskMaxAggregateOutputType = {
 export type TaskCountAggregateOutputType = {
   id: number
   dailyChecklistId: number
-  completed: number
+  priority: number
+  isCompleted: number
   taskContent: number
   createdAt: number
   updatedAt: number
@@ -56,7 +59,8 @@ export type TaskCountAggregateOutputType = {
 export type TaskMinAggregateInputType = {
   id?: true
   dailyChecklistId?: true
-  completed?: true
+  priority?: true
+  isCompleted?: true
   taskContent?: true
   createdAt?: true
   updatedAt?: true
@@ -65,7 +69,8 @@ export type TaskMinAggregateInputType = {
 export type TaskMaxAggregateInputType = {
   id?: true
   dailyChecklistId?: true
-  completed?: true
+  priority?: true
+  isCompleted?: true
   taskContent?: true
   createdAt?: true
   updatedAt?: true
@@ -74,7 +79,8 @@ export type TaskMaxAggregateInputType = {
 export type TaskCountAggregateInputType = {
   id?: true
   dailyChecklistId?: true
-  completed?: true
+  priority?: true
+  isCompleted?: true
   taskContent?: true
   createdAt?: true
   updatedAt?: true
@@ -156,7 +162,8 @@ export type TaskGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type TaskGroupByOutputType = {
   id: string
   dailyChecklistId: string
-  completed: boolean
+  priority: $Enums.Priority
+  isCompleted: boolean
   taskContent: string
   createdAt: Date
   updatedAt: Date
@@ -186,7 +193,8 @@ export type TaskWhereInput = {
   NOT?: Prisma.TaskWhereInput | Prisma.TaskWhereInput[]
   id?: Prisma.StringFilter<"Task"> | string
   dailyChecklistId?: Prisma.StringFilter<"Task"> | string
-  completed?: Prisma.BoolFilter<"Task"> | boolean
+  priority?: Prisma.EnumPriorityFilter<"Task"> | $Enums.Priority
+  isCompleted?: Prisma.BoolFilter<"Task"> | boolean
   taskContent?: Prisma.StringFilter<"Task"> | string
   createdAt?: Prisma.DateTimeFilter<"Task"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Task"> | Date | string
@@ -196,7 +204,8 @@ export type TaskWhereInput = {
 export type TaskOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   dailyChecklistId?: Prisma.SortOrder
-  completed?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
+  isCompleted?: Prisma.SortOrder
   taskContent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -209,7 +218,8 @@ export type TaskWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.TaskWhereInput[]
   NOT?: Prisma.TaskWhereInput | Prisma.TaskWhereInput[]
   dailyChecklistId?: Prisma.StringFilter<"Task"> | string
-  completed?: Prisma.BoolFilter<"Task"> | boolean
+  priority?: Prisma.EnumPriorityFilter<"Task"> | $Enums.Priority
+  isCompleted?: Prisma.BoolFilter<"Task"> | boolean
   taskContent?: Prisma.StringFilter<"Task"> | string
   createdAt?: Prisma.DateTimeFilter<"Task"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Task"> | Date | string
@@ -219,7 +229,8 @@ export type TaskWhereUniqueInput = Prisma.AtLeast<{
 export type TaskOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   dailyChecklistId?: Prisma.SortOrder
-  completed?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
+  isCompleted?: Prisma.SortOrder
   taskContent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -234,7 +245,8 @@ export type TaskScalarWhereWithAggregatesInput = {
   NOT?: Prisma.TaskScalarWhereWithAggregatesInput | Prisma.TaskScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Task"> | string
   dailyChecklistId?: Prisma.StringWithAggregatesFilter<"Task"> | string
-  completed?: Prisma.BoolWithAggregatesFilter<"Task"> | boolean
+  priority?: Prisma.EnumPriorityWithAggregatesFilter<"Task"> | $Enums.Priority
+  isCompleted?: Prisma.BoolWithAggregatesFilter<"Task"> | boolean
   taskContent?: Prisma.StringWithAggregatesFilter<"Task"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Task"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Task"> | Date | string
@@ -242,7 +254,8 @@ export type TaskScalarWhereWithAggregatesInput = {
 
 export type TaskCreateInput = {
   id?: string
-  completed?: boolean
+  priority?: $Enums.Priority
+  isCompleted?: boolean
   taskContent: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -252,7 +265,8 @@ export type TaskCreateInput = {
 export type TaskUncheckedCreateInput = {
   id?: string
   dailyChecklistId: string
-  completed?: boolean
+  priority?: $Enums.Priority
+  isCompleted?: boolean
   taskContent: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -260,7 +274,8 @@ export type TaskUncheckedCreateInput = {
 
 export type TaskUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   taskContent?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -270,7 +285,8 @@ export type TaskUpdateInput = {
 export type TaskUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dailyChecklistId?: Prisma.StringFieldUpdateOperationsInput | string
-  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   taskContent?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -279,7 +295,8 @@ export type TaskUncheckedUpdateInput = {
 export type TaskCreateManyInput = {
   id?: string
   dailyChecklistId: string
-  completed?: boolean
+  priority?: $Enums.Priority
+  isCompleted?: boolean
   taskContent: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -287,7 +304,8 @@ export type TaskCreateManyInput = {
 
 export type TaskUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   taskContent?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -296,7 +314,8 @@ export type TaskUpdateManyMutationInput = {
 export type TaskUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dailyChecklistId?: Prisma.StringFieldUpdateOperationsInput | string
-  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   taskContent?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -315,7 +334,8 @@ export type TaskOrderByRelationAggregateInput = {
 export type TaskCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   dailyChecklistId?: Prisma.SortOrder
-  completed?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
+  isCompleted?: Prisma.SortOrder
   taskContent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -324,7 +344,8 @@ export type TaskCountOrderByAggregateInput = {
 export type TaskMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   dailyChecklistId?: Prisma.SortOrder
-  completed?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
+  isCompleted?: Prisma.SortOrder
   taskContent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -333,7 +354,8 @@ export type TaskMaxOrderByAggregateInput = {
 export type TaskMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   dailyChecklistId?: Prisma.SortOrder
-  completed?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
+  isCompleted?: Prisma.SortOrder
   taskContent?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -381,9 +403,14 @@ export type TaskUncheckedUpdateManyWithoutDailyChecklistNestedInput = {
   deleteMany?: Prisma.TaskScalarWhereInput | Prisma.TaskScalarWhereInput[]
 }
 
+export type EnumPriorityFieldUpdateOperationsInput = {
+  set?: $Enums.Priority
+}
+
 export type TaskCreateWithoutDailyChecklistInput = {
   id?: string
-  completed?: boolean
+  priority?: $Enums.Priority
+  isCompleted?: boolean
   taskContent: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -391,7 +418,8 @@ export type TaskCreateWithoutDailyChecklistInput = {
 
 export type TaskUncheckedCreateWithoutDailyChecklistInput = {
   id?: string
-  completed?: boolean
+  priority?: $Enums.Priority
+  isCompleted?: boolean
   taskContent: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -429,7 +457,8 @@ export type TaskScalarWhereInput = {
   NOT?: Prisma.TaskScalarWhereInput | Prisma.TaskScalarWhereInput[]
   id?: Prisma.StringFilter<"Task"> | string
   dailyChecklistId?: Prisma.StringFilter<"Task"> | string
-  completed?: Prisma.BoolFilter<"Task"> | boolean
+  priority?: Prisma.EnumPriorityFilter<"Task"> | $Enums.Priority
+  isCompleted?: Prisma.BoolFilter<"Task"> | boolean
   taskContent?: Prisma.StringFilter<"Task"> | string
   createdAt?: Prisma.DateTimeFilter<"Task"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Task"> | Date | string
@@ -437,7 +466,8 @@ export type TaskScalarWhereInput = {
 
 export type TaskCreateManyDailyChecklistInput = {
   id?: string
-  completed?: boolean
+  priority?: $Enums.Priority
+  isCompleted?: boolean
   taskContent: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -445,7 +475,8 @@ export type TaskCreateManyDailyChecklistInput = {
 
 export type TaskUpdateWithoutDailyChecklistInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   taskContent?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -453,7 +484,8 @@ export type TaskUpdateWithoutDailyChecklistInput = {
 
 export type TaskUncheckedUpdateWithoutDailyChecklistInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   taskContent?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -461,7 +493,8 @@ export type TaskUncheckedUpdateWithoutDailyChecklistInput = {
 
 export type TaskUncheckedUpdateManyWithoutDailyChecklistInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   taskContent?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -472,7 +505,8 @@ export type TaskUncheckedUpdateManyWithoutDailyChecklistInput = {
 export type TaskSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   dailyChecklistId?: boolean
-  completed?: boolean
+  priority?: boolean
+  isCompleted?: boolean
   taskContent?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -482,7 +516,8 @@ export type TaskSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type TaskSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   dailyChecklistId?: boolean
-  completed?: boolean
+  priority?: boolean
+  isCompleted?: boolean
   taskContent?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -492,7 +527,8 @@ export type TaskSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type TaskSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   dailyChecklistId?: boolean
-  completed?: boolean
+  priority?: boolean
+  isCompleted?: boolean
   taskContent?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -502,13 +538,14 @@ export type TaskSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type TaskSelectScalar = {
   id?: boolean
   dailyChecklistId?: boolean
-  completed?: boolean
+  priority?: boolean
+  isCompleted?: boolean
   taskContent?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dailyChecklistId" | "completed" | "taskContent" | "createdAt" | "updatedAt", ExtArgs["result"]["task"]>
+export type TaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dailyChecklistId" | "priority" | "isCompleted" | "taskContent" | "createdAt" | "updatedAt", ExtArgs["result"]["task"]>
 export type TaskInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   dailyChecklist?: boolean | Prisma.DailyChecklistDefaultArgs<ExtArgs>
 }
@@ -527,7 +564,8 @@ export type $TaskPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     dailyChecklistId: string
-    completed: boolean
+    priority: $Enums.Priority
+    isCompleted: boolean
     taskContent: string
     createdAt: Date
     updatedAt: Date
@@ -957,7 +995,8 @@ export interface Prisma__TaskClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface TaskFieldRefs {
   readonly id: Prisma.FieldRef<"Task", 'String'>
   readonly dailyChecklistId: Prisma.FieldRef<"Task", 'String'>
-  readonly completed: Prisma.FieldRef<"Task", 'Boolean'>
+  readonly priority: Prisma.FieldRef<"Task", 'Priority'>
+  readonly isCompleted: Prisma.FieldRef<"Task", 'Boolean'>
   readonly taskContent: Prisma.FieldRef<"Task", 'String'>
   readonly createdAt: Prisma.FieldRef<"Task", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Task", 'DateTime'>
