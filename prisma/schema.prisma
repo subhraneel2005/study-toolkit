@@ -58,9 +58,8 @@ model DailyChecklist {
   id     String @id @default(uuid())
   userId String
 
-  date     DateTime
-  priority Priority @default(HIGH)
-  tasks    Task[]
+  date  DateTime
+  tasks Task[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -73,13 +72,14 @@ model Task {
   id               String @id @default(uuid())
   dailyChecklistId String
 
-  completed   Boolean @default(false)
+  priority    Priority @default(HIGH)
+  isCompleted Boolean  @default(false)
   taskContent String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  dailyChecklist DailyChecklist @relation(fields: [dailyChecklistId], references: [id])
+  dailyChecklist DailyChecklist @relation(fields: [dailyChecklistId], references: [id], onDelete: Cascade)
 }
 
 enum Priority {

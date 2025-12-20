@@ -1085,7 +1085,6 @@ export const DailyChecklistScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   date: 'date',
-  priority: 'priority',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1096,7 +1095,8 @@ export type DailyChecklistScalarFieldEnum = (typeof DailyChecklistScalarFieldEnu
 export const TaskScalarFieldEnum = {
   id: 'id',
   dailyChecklistId: 'dailyChecklistId',
-  completed: 'completed',
+  priority: 'priority',
+  isCompleted: 'isCompleted',
   taskContent: 'taskContent',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

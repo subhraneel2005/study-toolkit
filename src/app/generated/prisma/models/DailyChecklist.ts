@@ -28,7 +28,6 @@ export type DailyChecklistMinAggregateOutputType = {
   id: string | null
   userId: string | null
   date: Date | null
-  priority: $Enums.Priority | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -37,7 +36,6 @@ export type DailyChecklistMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   date: Date | null
-  priority: $Enums.Priority | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -46,7 +44,6 @@ export type DailyChecklistCountAggregateOutputType = {
   id: number
   userId: number
   date: number
-  priority: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -57,7 +54,6 @@ export type DailyChecklistMinAggregateInputType = {
   id?: true
   userId?: true
   date?: true
-  priority?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -66,7 +62,6 @@ export type DailyChecklistMaxAggregateInputType = {
   id?: true
   userId?: true
   date?: true
-  priority?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -75,7 +70,6 @@ export type DailyChecklistCountAggregateInputType = {
   id?: true
   userId?: true
   date?: true
-  priority?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -157,7 +151,6 @@ export type DailyChecklistGroupByOutputType = {
   id: string
   userId: string
   date: Date
-  priority: $Enums.Priority
   createdAt: Date
   updatedAt: Date
   _count: DailyChecklistCountAggregateOutputType | null
@@ -187,7 +180,6 @@ export type DailyChecklistWhereInput = {
   id?: Prisma.StringFilter<"DailyChecklist"> | string
   userId?: Prisma.StringFilter<"DailyChecklist"> | string
   date?: Prisma.DateTimeFilter<"DailyChecklist"> | Date | string
-  priority?: Prisma.EnumPriorityFilter<"DailyChecklist"> | $Enums.Priority
   createdAt?: Prisma.DateTimeFilter<"DailyChecklist"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyChecklist"> | Date | string
   tasks?: Prisma.TaskListRelationFilter
@@ -198,7 +190,6 @@ export type DailyChecklistOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   date?: Prisma.SortOrder
-  priority?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   tasks?: Prisma.TaskOrderByRelationAggregateInput
@@ -213,7 +204,6 @@ export type DailyChecklistWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.DailyChecklistWhereInput | Prisma.DailyChecklistWhereInput[]
   userId?: Prisma.StringFilter<"DailyChecklist"> | string
   date?: Prisma.DateTimeFilter<"DailyChecklist"> | Date | string
-  priority?: Prisma.EnumPriorityFilter<"DailyChecklist"> | $Enums.Priority
   createdAt?: Prisma.DateTimeFilter<"DailyChecklist"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyChecklist"> | Date | string
   tasks?: Prisma.TaskListRelationFilter
@@ -224,7 +214,6 @@ export type DailyChecklistOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   date?: Prisma.SortOrder
-  priority?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.DailyChecklistCountOrderByAggregateInput
@@ -239,7 +228,6 @@ export type DailyChecklistScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"DailyChecklist"> | string
   userId?: Prisma.StringWithAggregatesFilter<"DailyChecklist"> | string
   date?: Prisma.DateTimeWithAggregatesFilter<"DailyChecklist"> | Date | string
-  priority?: Prisma.EnumPriorityWithAggregatesFilter<"DailyChecklist"> | $Enums.Priority
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"DailyChecklist"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"DailyChecklist"> | Date | string
 }
@@ -247,7 +235,6 @@ export type DailyChecklistScalarWhereWithAggregatesInput = {
 export type DailyChecklistCreateInput = {
   id?: string
   date: Date | string
-  priority?: $Enums.Priority
   createdAt?: Date | string
   updatedAt?: Date | string
   tasks?: Prisma.TaskCreateNestedManyWithoutDailyChecklistInput
@@ -258,7 +245,6 @@ export type DailyChecklistUncheckedCreateInput = {
   id?: string
   userId: string
   date: Date | string
-  priority?: $Enums.Priority
   createdAt?: Date | string
   updatedAt?: Date | string
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutDailyChecklistInput
@@ -267,7 +253,6 @@ export type DailyChecklistUncheckedCreateInput = {
 export type DailyChecklistUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.TaskUpdateManyWithoutDailyChecklistNestedInput
@@ -278,7 +263,6 @@ export type DailyChecklistUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutDailyChecklistNestedInput
@@ -288,7 +272,6 @@ export type DailyChecklistCreateManyInput = {
   id?: string
   userId: string
   date: Date | string
-  priority?: $Enums.Priority
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -296,7 +279,6 @@ export type DailyChecklistCreateManyInput = {
 export type DailyChecklistUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -305,7 +287,6 @@ export type DailyChecklistUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -329,7 +310,6 @@ export type DailyChecklistCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   date?: Prisma.SortOrder
-  priority?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -338,7 +318,6 @@ export type DailyChecklistMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   date?: Prisma.SortOrder
-  priority?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -347,7 +326,6 @@ export type DailyChecklistMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   date?: Prisma.SortOrder
-  priority?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -399,10 +377,6 @@ export type DailyChecklistUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.DailyChecklistScalarWhereInput | Prisma.DailyChecklistScalarWhereInput[]
 }
 
-export type EnumPriorityFieldUpdateOperationsInput = {
-  set?: $Enums.Priority
-}
-
 export type DailyChecklistCreateNestedOneWithoutTasksInput = {
   create?: Prisma.XOR<Prisma.DailyChecklistCreateWithoutTasksInput, Prisma.DailyChecklistUncheckedCreateWithoutTasksInput>
   connectOrCreate?: Prisma.DailyChecklistCreateOrConnectWithoutTasksInput
@@ -420,7 +394,6 @@ export type DailyChecklistUpdateOneRequiredWithoutTasksNestedInput = {
 export type DailyChecklistCreateWithoutUserInput = {
   id?: string
   date: Date | string
-  priority?: $Enums.Priority
   createdAt?: Date | string
   updatedAt?: Date | string
   tasks?: Prisma.TaskCreateNestedManyWithoutDailyChecklistInput
@@ -429,7 +402,6 @@ export type DailyChecklistCreateWithoutUserInput = {
 export type DailyChecklistUncheckedCreateWithoutUserInput = {
   id?: string
   date: Date | string
-  priority?: $Enums.Priority
   createdAt?: Date | string
   updatedAt?: Date | string
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutDailyChecklistInput
@@ -468,7 +440,6 @@ export type DailyChecklistScalarWhereInput = {
   id?: Prisma.StringFilter<"DailyChecklist"> | string
   userId?: Prisma.StringFilter<"DailyChecklist"> | string
   date?: Prisma.DateTimeFilter<"DailyChecklist"> | Date | string
-  priority?: Prisma.EnumPriorityFilter<"DailyChecklist"> | $Enums.Priority
   createdAt?: Prisma.DateTimeFilter<"DailyChecklist"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyChecklist"> | Date | string
 }
@@ -476,7 +447,6 @@ export type DailyChecklistScalarWhereInput = {
 export type DailyChecklistCreateWithoutTasksInput = {
   id?: string
   date: Date | string
-  priority?: $Enums.Priority
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutDailyChecklistInput
@@ -486,7 +456,6 @@ export type DailyChecklistUncheckedCreateWithoutTasksInput = {
   id?: string
   userId: string
   date: Date | string
-  priority?: $Enums.Priority
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -510,7 +479,6 @@ export type DailyChecklistUpdateToOneWithWhereWithoutTasksInput = {
 export type DailyChecklistUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutDailyChecklistNestedInput
@@ -520,7 +488,6 @@ export type DailyChecklistUncheckedUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -528,7 +495,6 @@ export type DailyChecklistUncheckedUpdateWithoutTasksInput = {
 export type DailyChecklistCreateManyUserInput = {
   id?: string
   date: Date | string
-  priority?: $Enums.Priority
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -536,7 +502,6 @@ export type DailyChecklistCreateManyUserInput = {
 export type DailyChecklistUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.TaskUpdateManyWithoutDailyChecklistNestedInput
@@ -545,7 +510,6 @@ export type DailyChecklistUpdateWithoutUserInput = {
 export type DailyChecklistUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutDailyChecklistNestedInput
@@ -554,7 +518,6 @@ export type DailyChecklistUncheckedUpdateWithoutUserInput = {
 export type DailyChecklistUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  priority?: Prisma.EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -594,7 +557,6 @@ export type DailyChecklistSelect<ExtArgs extends runtime.Types.Extensions.Intern
   id?: boolean
   userId?: boolean
   date?: boolean
-  priority?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   tasks?: boolean | Prisma.DailyChecklist$tasksArgs<ExtArgs>
@@ -606,7 +568,6 @@ export type DailyChecklistSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   id?: boolean
   userId?: boolean
   date?: boolean
-  priority?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -616,7 +577,6 @@ export type DailyChecklistSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   id?: boolean
   userId?: boolean
   date?: boolean
-  priority?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -626,12 +586,11 @@ export type DailyChecklistSelectScalar = {
   id?: boolean
   userId?: boolean
   date?: boolean
-  priority?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DailyChecklistOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "date" | "priority" | "createdAt" | "updatedAt", ExtArgs["result"]["dailyChecklist"]>
+export type DailyChecklistOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "date" | "createdAt" | "updatedAt", ExtArgs["result"]["dailyChecklist"]>
 export type DailyChecklistInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tasks?: boolean | Prisma.DailyChecklist$tasksArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -654,7 +613,6 @@ export type $DailyChecklistPayload<ExtArgs extends runtime.Types.Extensions.Inte
     id: string
     userId: string
     date: Date
-    priority: $Enums.Priority
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["dailyChecklist"]>
@@ -1085,7 +1043,6 @@ export interface DailyChecklistFieldRefs {
   readonly id: Prisma.FieldRef<"DailyChecklist", 'String'>
   readonly userId: Prisma.FieldRef<"DailyChecklist", 'String'>
   readonly date: Prisma.FieldRef<"DailyChecklist", 'DateTime'>
-  readonly priority: Prisma.FieldRef<"DailyChecklist", 'Priority'>
   readonly createdAt: Prisma.FieldRef<"DailyChecklist", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"DailyChecklist", 'DateTime'>
 }
