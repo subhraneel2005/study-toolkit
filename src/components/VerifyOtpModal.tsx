@@ -39,6 +39,7 @@ interface VerifyOtpProps {
   email?: string;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  onNext: () => void;
 }
 
 export default function VerifyOtp({
@@ -46,6 +47,7 @@ export default function VerifyOtp({
   email,
   open: controlledOpen,
   onOpenChange,
+  onNext,
 }: VerifyOtpProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -78,6 +80,8 @@ export default function VerifyOtp({
         reset();
         setSuccess(false);
         setErrorMessage(null);
+
+        onNext();
       }, 2000); // Close after 2 seconds
 
       return () => clearTimeout(timer);
@@ -158,8 +162,8 @@ export default function VerifyOtp({
         <DialogHeader>
           <DialogTitle>Verify your email</DialogTitle>
           <DialogDescription>
-            We've sent a 6-digit code to <strong>{email}</strong>. Please enter
-            it below.
+            We&apos;ve sent a 6-digit code to <strong>{email}</strong>. Please
+            enter it below.
           </DialogDescription>
         </DialogHeader>
         <form

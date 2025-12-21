@@ -39,7 +39,7 @@ export default function TopNav() {
 
   useEffect(() => {
     fetchUser();
-  }, [setUser, setIsLoading]);
+  }, [setUser, setIsLoading, pathname]);
 
   return (
     <div className="h-16 justify-start items-center px-2 w-full border-b border-border flex gap-4 fixed top-0 left-0 right-0 bg-background z-50">
@@ -80,7 +80,14 @@ export default function TopNav() {
         >
           Study toolkit
         </Link>
-        {!isLoading && (user ? <UserHoverCard /> : <AuthModals />)}
+        {!isLoading &&
+          (user ? (
+            <UserHoverCard />
+          ) : (
+            <Link href={"/onboarding"}>
+              <Button>Get Started</Button>
+            </Link>
+          ))}
       </nav>
     </div>
   );

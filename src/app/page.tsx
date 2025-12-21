@@ -3,6 +3,7 @@ import FeaturesSection from "@/components/FeaturesScreen";
 import SigninScreen from "@/components/SignInScreen";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores/useAuthStore";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -26,16 +27,9 @@ export default function Home() {
       </p>
 
       <div className="flex gap-4 justify-center items-center mt-6">
-        <Button
-          onClick={() =>
-            document.getElementById("signin-screen")?.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            })
-          }
-        >
-          Get Started
-        </Button>
+        <Link href={"/onboarding"}>
+          <Button>Get Started</Button>
+        </Link>
 
         <Button
           onClick={() =>
@@ -49,8 +43,6 @@ export default function Home() {
           Explore tools
         </Button>
       </div>
-
-      <SigninScreen />
 
       <div className="mt-[80px]"></div>
       <FeaturesSection />

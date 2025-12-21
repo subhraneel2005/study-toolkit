@@ -4,25 +4,23 @@ import { useState } from "react";
 import {
   Sheet,
   SheetContent,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import {
   LucideSidebar,
   Search,
   MessageSquare,
   BookMarked,
   Notebook,
-  FileText,
   HelpCircle,
   Pen,
   SquareCheckBig,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import MinimapToggle from "./MinimapToggle";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { ScrollArea } from "./ui/scroll-area";
 import Link from "next/link";
@@ -30,74 +28,46 @@ import Link from "next/link";
 export function Sidebar() {
   const [open, setOpen] = useState(true);
 
-  const agents = [
+  const personalTools = [
     {
       name: "Daily Logs",
       description: "Document your daily work and learnings here.",
       icon: <Pen className="h-5 w-5 text-muted-foreground" />,
-      type: "agentNode",
       href: "/tools/dailyLogs",
-      defaultData: {
-        label: "Daily Logs",
-        description: "Document your daily work and learnings here",
-      },
     },
+
     {
       name: "Daily Checklist",
       description: "Finish your todos with priority.",
       icon: <SquareCheckBig className="h-5 w-5 text-muted-foreground" />,
-      type: "agentNode",
       href: "/tools/dailyChecklist",
-      defaultData: {
-        label: "Daily Checklist",
-        description: "Finish your todos with priority",
-      },
     },
+  ];
+
+  const disposableTools = [
     {
-      name: "Web Search tool",
-      description: "Searches relevant research papers.",
-      icon: <Search className="h-5 w-5 text-muted-foreground" />,
-      type: "webSearchNode",
-      href: "/tools/webSearch",
-      defaultData: {
-        label: "Web Search Agent",
-        description: "Searches the web for information",
-        query: "",
-        sources: [],
-      },
+      name: "Flashcards Agent",
+      description: "Generates study flashcards automatically.",
+      icon: <Notebook className="h-5 w-5 text-muted-foreground" />,
+      href: "/tools/flashcards",
     },
     {
       name: "Chat with PDF Agent",
       description: "Chat with your uploaded PDFs.",
       icon: <MessageSquare className="h-5 w-5 text-muted-foreground" />,
-      type: "pdfNode",
       href: "/tools/chatWithPDF",
-      defaultData: {
-        label: "Chat with PDF Agent",
-        description: "Chat with your uploaded PDFs",
-      },
     },
     {
       name: "Summarizer tool",
       description: "Summarizes long text or documents.",
       icon: <BookMarked className="h-5 w-5 text-muted-foreground" />,
-      type: "summaryNode",
       href: "/tools/summarizer",
-      defaultData: {
-        label: "Summarizer Agent",
-        description: "Summarizes long text or documents",
-      },
     },
     {
-      name: "Flashcards Agent",
-      description: "Generates study flashcards automatically.",
-      icon: <Notebook className="h-5 w-5 text-muted-foreground" />,
-      type: "agentNode",
-      href: "/tools/flashcards",
-      defaultData: {
-        label: "Flashcards Generator Agent",
-        description: "Generates study flashcards automatically",
-      },
+      name: "Web Search tool",
+      description: "Searches relevant research papers.",
+      icon: <Search className="h-5 w-5 text-muted-foreground" />,
+      href: "/tools/webSearch",
     },
   ];
 
@@ -111,16 +81,16 @@ export function Sidebar() {
 
       <SheetContent
         side="left"
-        className="w-[330px] top-16 fixed  h-[calc(100vh-4rem)] flex flex-col border-r border-border select-none"
+        className="w-[330px] top-16 fixed h-[calc(100vh-4rem)] flex flex-col border-r border-border select-none p-0 overflow-hidden"
         onInteractOutside={(e) => e.preventDefault()}
       >
         <SheetHeader className="flex-shrink-0 px-4 py-3 border-b border-border">
-          <SheetTitle className="text-3xl leading-[52.8px] tracking-[-1.5px] font-semibold">
-            Agents
+          <SheetTitle className="text-3xl tracking-[-1.8px] font-semibold">
+            Your Toolkit
           </SheetTitle>
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground">
-              Agents and Tools
+              Personal & disposable tools
             </span>
             <HoverCard>
               <HoverCardTrigger>
@@ -128,36 +98,67 @@ export function Sidebar() {
               </HoverCardTrigger>
               <HoverCardContent side="right">
                 <p className="text-sm">
-                  Drag and drop agents into the canvas to build your AI
-                  workflows.
+                  Personal tools store your data. Disposable tools are
+                  temporary.
                 </p>
               </HoverCardContent>
             </HoverCard>
           </div>
         </SheetHeader>
 
-        <ScrollArea className="flex-1 h-96 px-4 py-5 space-y-4">
-          {agents.map((agent, index) => (
-            <Link href={agent.href} key={index}>
-              <Card
-                className="border border-border shadow-none cursor-pointer my-4"
-                // draggable
-                // onDragStart={(e) => onDragStart(e, agent)}
-              >
-                <CardContent className="flex items-start gap-3">
-                  <div className="flex-shrink-0">{agent.icon}</div>
-                  <div>
-                    <h3 className="text-sm font-medium">{agent.name}</h3>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {agent.description}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
+        <ScrollArea className="flex-1 min-h-0 w-full p-4">
+          <div className="py-5 flex flex-col gap-6">
+            {/* Personal tools */}
+            <div className="flex flex-col gap-3">
+              <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
+                Personal
+              </p>
+              <div className="flex flex-col gap-3">
+                {personalTools.map((tool) => (
+                  <Link href={tool.href} key={tool.name} className="block">
+                    <Card className="border border-border shadow-none cursor-pointer hover:bg-accent/50 transition-colors">
+                      <CardContent className="flex items-start gap-3 px-4 py-2">
+                        <div className="mt-1">{tool.icon}</div>
+                        <div>
+                          <h3 className="text-sm font-medium">{tool.name}</h3>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {tool.description}
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <Separator />
+
+            {/* Disposable tools */}
+            <div className="flex flex-col gap-3">
+              <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
+                Disposable
+              </p>
+              <div className="flex flex-col gap-3">
+                {disposableTools.map((tool) => (
+                  <Link href={tool.href} key={tool.name} className="block">
+                    <Card className="border border-border shadow-none cursor-pointer hover:bg-accent/50 transition-colors">
+                      <CardContent className="flex items-start gap-3 px-4 py-2">
+                        <div className="mt-1">{tool.icon}</div>
+                        <div>
+                          <h3 className="text-sm font-medium">{tool.name}</h3>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {tool.description}
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
         </ScrollArea>
-        <SheetFooter></SheetFooter>
       </SheetContent>
     </Sheet>
   );
