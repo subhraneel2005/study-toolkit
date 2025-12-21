@@ -1051,6 +1051,7 @@ export const UserScalarFieldEnum = {
   image: 'image',
   geminiKey: 'geminiKey',
   serperKey: 'serperKey',
+  accountCompleted: 'accountCompleted',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
