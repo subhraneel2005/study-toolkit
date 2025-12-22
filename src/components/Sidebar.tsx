@@ -19,6 +19,8 @@ import {
   HelpCircle,
   Pen,
   SquareCheckBig,
+  GitGraph,
+  LucideGitGraph,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
@@ -41,6 +43,13 @@ export function Sidebar() {
       description: "Finish your todos with priority.",
       icon: <SquareCheckBig className="h-5 w-5 text-muted-foreground" />,
       href: "/tools/dailyChecklist",
+    },
+
+    {
+      name: "My Heatmap",
+      description: "See your study streak in action.",
+      icon: <LucideGitGraph className="h-5 w-5 text-muted-foreground" />,
+      href: "/tools/heatmap",
     },
   ];
 

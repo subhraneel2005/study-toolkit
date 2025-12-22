@@ -62,32 +62,14 @@ export default function TopNav() {
                 Tools
               </Button>
             </Link>
-            <Link href={"/myApps"}>
-              <Button variant="ghost" className="cursor-pointer">
-                Apps
-              </Button>
-            </Link>
             <Link href={"/profile"}>
               <Button variant="ghost" className="cursor-pointer mr-3">
                 Profile
               </Button>
             </Link>
+            {!isLoading && <UserHoverCard />}
           </>
         )}
-        <Link
-          href={"/"}
-          className="font-bold text-xl tracking-[-1.2px] flex justify-center items-center mr-4"
-        >
-          Study toolkit
-        </Link>
-        {!isLoading &&
-          (user ? (
-            <UserHoverCard />
-          ) : (
-            <Link href={"/onboarding"}>
-              <Button>Get Started</Button>
-            </Link>
-          ))}
       </nav>
     </div>
   );
