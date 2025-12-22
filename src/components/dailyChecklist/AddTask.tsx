@@ -106,9 +106,9 @@ export default function AddTaskScreen({
       <div className="w-full max-w-2xl space-y-6">
         {/* Header */}
         <header className="space-y-1">
-          <h1 className="text-3xl font-bold text-foreground tracking-[-1.4px]">
+          <h2 className="text-3xl font-bold text-foreground tracking-[-1.4px]">
             Daily Checklist
-          </h1>
+          </h2>
           <p className="text-sm text-muted-foreground">{formattedDate}</p>
         </header>
 
