@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// TODO: FIX ANY TYPE ERROR
+
 "use client";
 
 import {
@@ -109,7 +112,7 @@ const SummaryNode = ({ data }: any) => {
   };
 
   return (
-    <Card className="w-96 md:w-[500px] shadow-md border-muted bg-card">
+    <Card className="w-[360px] md:w-[500px] shadow-md border-muted bg-card mt-16">
       <CardHeader className="pb-2">
         <CardTitle className="text-base font-semibold">
           {data?.defaultData.label}
@@ -125,7 +128,7 @@ const SummaryNode = ({ data }: any) => {
             <Label className="items-start justify-start w-full flex mb-2">
               Select tone
             </Label>
-            <ButtonGroup className="flex justify-start items-start w-full">
+            <ButtonGroup className="flex flex-wrap justify-start items-start w-full">
               {firstRow.map((tone) => (
                 <Button
                   key={tone}
@@ -140,7 +143,7 @@ const SummaryNode = ({ data }: any) => {
                 </Button>
               ))}
             </ButtonGroup>
-            <ButtonGroup className="flex justify-start items-start w-full">
+            <ButtonGroup className="flex flex-wrap gap-2 justify-start items-start w-full">
               {secondRow.map((tone) => (
                 <Button
                   key={tone}

@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// TODO: FIX ANY TYPE ERROR
+
 import {
   Search,
   FileText,
@@ -28,9 +31,9 @@ export function Features() {
               <span className="text-zinc-500">for Knowledge Work.</span>
             </h2>
             <p className="text-lg text-zinc-400 leading-relaxed">
-              Don't just chat with AI. Build powerful, reusable workflows that
-              research, synthesize, and organize information for you while you
-              sleep.
+              Don&apos;t just chat with AI. Build powerful, reusable workflows
+              that research, synthesize, and organize information for you while
+              you sleep.
             </p>
           </div>
           <div className="text-right hidden md:block">

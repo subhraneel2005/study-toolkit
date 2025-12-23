@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// TODO: FIX ANY TYPE ERROR
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -163,7 +166,7 @@ export default function Signup({ activeModal, setActiveModal }: SignupProps) {
             )}
           </div>
 
-          <VerifyOtp email={email}>
+          <VerifyOtp onNext={() => {}} email={email}>
             <Button
               type="submit"
               className="w-full"

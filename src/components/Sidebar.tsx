@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -26,9 +26,18 @@ import { Card, CardContent } from "@/components/ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { ScrollArea } from "./ui/scroll-area";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function Sidebar() {
   const [open, setOpen] = useState(true);
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname !== "/tools") {
+      setOpen(false);
+    }
+  }, [pathname]);
 
   const personalTools = [
     {

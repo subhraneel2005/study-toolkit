@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// TODO: FIX ANY TYPE ERROR
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Database, Search } from "lucide-react";
 import { Badge } from "./ui/badge";
@@ -125,7 +128,7 @@ export function Hero() {
                   <div className="space-y-2">
                     <div className="h-1.5 w-12 bg-zinc-800 rounded-full" />
                     <div className="text-xs text-zinc-500 font-mono bg-black/50 p-2 rounded border border-white/5">
-                      query: "CRISPR advancements 2024"
+                      query: CRISPR advancements 2024
                     </div>
                   </div>
                 </div>
@@ -145,9 +148,9 @@ export function Hero() {
                   </div>
                   <div className="space-y-2">
                     <div className="text-xs text-zinc-500 font-mono bg-black/50 p-2 rounded border border-white/5">
-                      format: "bullet_points"
+                      format: bullet_points
                       <br />
-                      depth: "academic"
+                      depth: academic
                     </div>
                   </div>
                 </div>

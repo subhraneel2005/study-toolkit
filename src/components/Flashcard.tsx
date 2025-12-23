@@ -37,7 +37,7 @@ export default function FlashCard({ flashcard }: { flashcard: Flashcard }) {
 
         {/* BACK */}
         <Card
-          className="absolute w-full h-full bg-primary border border-primary rounded-xl shadow-lg flex items-center justify-center p-8"
+          className="absolute w-full h-full overflow-hidden bg-primary border border-primary rounded-xl shadow-lg flex items-center justify-center p-4"
           style={{
             backfaceVisibility: "hidden",
             transform: "rotateY(180deg)",
@@ -47,7 +47,7 @@ export default function FlashCard({ flashcard }: { flashcard: Flashcard }) {
             <div className="text-sm font-medium text-primary-foreground/70 mb-4">
               ANSWER
             </div>
-            <CardTitle className="text-xl font-semibold text-primary-foreground">
+            <CardTitle className="text-sm md:text-lg text-primary-foreground">
               {flashcard.answer}
             </CardTitle>
           </CardContent>

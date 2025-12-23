@@ -50,23 +50,16 @@ export default function DailyLogForm({ currentDate }: { currentDate: Date }) {
       if (error instanceof Error) {
         switch (error.message) {
           case "UNAUTHORIZED":
-            toast.error("UNAUTHORIZED", {
-              description: "Please login to perform this action",
-            });
+            toast.error("UNAUTHORIZED", { description: "Please login" });
             break;
-
           case "INVALID_INPUT":
-            toast.error("INVALID_INPUT", {
-              description: "Invalid form data",
-            });
+            toast.error("INVALID_INPUT", { description: "Invalid form data" });
             break;
-
           case "DATABASE_ERROR":
             toast.error("DATABASE_ERROR", {
               description: "Failed to save log",
             });
             break;
-
           default:
             toast.error("Something went wrong");
         }
@@ -77,23 +70,26 @@ export default function DailyLogForm({ currentDate }: { currentDate: Date }) {
   };
 
   return (
-    <div className="min-h-screen w-full bg-background p-6 flex flex-col items-center justify-center">
-      <div className="w-full max-w-2xl space-y-6">
+    <div className="min-h-screen w-full bg-background p-4 sm:p-6 flex flex-col items-center justify-start md:justify-center">
+      <div className="w-full max-w-2xl space-y-4 sm:space-y-6 mt-14">
         {/* Header */}
         <header className="space-y-1">
-          <h1 className="text-3xl font-bold text-foreground tracking-[-1.4px]">
+          {/* Changed: text-2xl on mobile, text-3xl on larger screens */}
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
             Daily Log
           </h1>
-          <p className="text-sm text-muted-foreground">{formattedDate}</p>
+          <p className="text-xs sm:text-sm text-muted-foreground">
+            {formattedDate}
+          </p>
         </header>
 
         {/* Main Card */}
         <Card className="border-border/50 shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-lg">Reflection</CardTitle>
+          <CardHeader className="p-4 sm:p-6">
+            <CardTitle className="text-base sm:text-lg">Reflection</CardTitle>
           </CardHeader>
 
-          <CardContent className="space-y-6">
+          <CardContent className="p-4 sm:p-6 space-y-4 sm:space-y-6">
             {/* Text Input */}
             <div className="space-y-2">
               <Label htmlFor="log-content" className="sr-only">
@@ -102,7 +98,8 @@ export default function DailyLogForm({ currentDate }: { currentDate: Date }) {
               <Textarea
                 id="log-content"
                 placeholder="What did I accomplish today?"
-                className="min-h-[240px] resize-y bg-transparent"
+                // Changed: Slightly smaller min-height for small mobile screens
+                className="min-h-[200px] sm:min-h-[240px] text-base resize-none sm:resize-y bg-transparent"
                 value={logContent}
                 onChange={(e) => setLogContent(e.target.value)}
               />
@@ -111,6 +108,7 @@ export default function DailyLogForm({ currentDate }: { currentDate: Date }) {
             {/* Category Selector */}
             <div className="space-y-3">
               <Label className="text-sm font-medium">Categories</Label>
+              {/* flex-wrap is already good, but let's ensure gap is touch-friendly */}
               <div className="flex flex-wrap gap-2">
                 {CATEGORIES.map((category) => {
                   const isSelected = selectedCategories.includes(category);
@@ -118,7 +116,8 @@ export default function DailyLogForm({ currentDate }: { currentDate: Date }) {
                     <Badge
                       key={category}
                       variant={isSelected ? "default" : "outline"}
-                      className="cursor-pointer hover:bg-primary/80 select-none px-3 py-1 font-normal transition-none"
+                      // Changed: Slightly larger padding for easier tapping (mobile-friendly)
+                      className="cursor-pointer hover:bg-primary/80 select-none px-3 py-1.5 sm:py-1 font-normal transition-none text-xs sm:text-sm"
                       onClick={() => toggleCategory(category)}
                     >
                       {category}
@@ -129,11 +128,11 @@ export default function DailyLogForm({ currentDate }: { currentDate: Date }) {
             </div>
           </CardContent>
 
-          <CardFooter>
+          <CardFooter className="p-4 sm:p-6">
             <Button
               onClick={() => handleSubmitLog()}
-              className="w-full"
-              size="default"
+              className="w-full h-11 sm:h-10" // Taller button for easier mobile tapping
+              size="lg"
               disabled={loading}
             >
               {loading ? (

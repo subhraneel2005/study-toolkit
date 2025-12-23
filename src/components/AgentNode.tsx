@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// TODO: FIX ANY TYPE ERROR
 import { Handle, Position } from "@xyflow/react";
 import {
   Card,

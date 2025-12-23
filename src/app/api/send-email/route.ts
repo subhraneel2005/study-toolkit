@@ -28,8 +28,8 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ success: true, data });
-  } catch (err: any) {
+  } catch (err) {
     console.error("Unexpected error:", err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json({ error: err }, { status: 500 });
   }
 }

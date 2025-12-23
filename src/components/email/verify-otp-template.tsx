@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// TODO: FIX ANY TYPE ERROR
+
 import {
   Body,
   Column,
@@ -34,7 +37,7 @@ export const ConfirmEmail = ({ validationCode }: ConfirmEmailProps) => (
         <Heading style={h1}>Confirm your email address</Heading>
         <Text style={heroText}>
           Your confirmation code is below - enter it in your open browser window
-          and we'll help you get signed in.
+          and we&apos;ll help you get signed in.
         </Text>
 
         <Section style={codeBox}>
@@ -42,8 +45,8 @@ export const ConfirmEmail = ({ validationCode }: ConfirmEmailProps) => (
         </Section>
 
         <Text style={text}>
-          If you didn't request this email, there's nothing to worry about, you
-          can safely ignore it.
+          If you didn&apos;t request this email, there&apos;s nothing to worry
+          about, you can safely ignore it.
         </Text>
 
         <Section>

@@ -87,8 +87,8 @@ export default function SigninPage({ setActiveModal }: SigninProps) {
       }
 
       window.location.href = "/";
-    } catch (error: any) {
-      setError(error.message || "Failed to sign in");
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Failed to sign in");
     } finally {
       setIsLoading(false);
     }

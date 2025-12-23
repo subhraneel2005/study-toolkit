@@ -31,7 +31,7 @@ export default function FlashcardScreen() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-2xl">
+      <div className="w-full max-w-2xl mt-12">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
