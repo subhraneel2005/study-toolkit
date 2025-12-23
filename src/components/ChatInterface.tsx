@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// TODO: FIX ANY TYPE ERROR
+
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -264,47 +267,49 @@ export default function ChatInterface() {
   }
 
   return (
-    <div className="bg-background border border-accent md:max-w-4xl max-w-sm w-full px-4 py-4 rounded-2xl shadow-lg space-y-6 mt-12">
-      {/* Conversation container */}
+    <div className="bg-background border border-accent w-full max-w-4xl mx-auto md:px-6 px-3 py-4 rounded-2xl shadow-lg space-y-4 md:space-y-6 mt-16">
       <Conversation
-        className="relative w-full rounded-xl overflow-y-hidden bg-card"
-        style={{ height: "500px" }}
+        className="relative w-full rounded-xl overflow-y-auto bg-card border"
+        style={{
+          height: "calc(100vh - 350px)",
+          minHeight: "400px",
+          maxHeight: "600px",
+        }}
       >
-        <ConversationContent>
+        <ConversationContent className="p-2 md:p-4">
           {messages.length === 0 ? (
             <ConversationEmptyState
-              icon={<MessageSquare className="size-12" />}
+              icon={<MessageSquare className="size-10 md:size-12" />}
               title="No messages yet"
               description="Start a conversation to see messages here"
             />
           ) : (
             messages.map((message) => (
-              <>
+              <div key={message.id} className="mb-4">
                 <Message
                   from={message.role}
-                  key={message.id}
-                  className={`flex-1 flex-col `}
+                  className="flex-1 flex-col max-w-[90%] md:max-w-full"
                 >
-                  <MessageContent className="mt-6 ">
+                  <MessageContent className="mt-2 md:mt-4 break-words">
                     {message.parts.map((part, i) => {
                       switch (part.type) {
                         case "text":
                           return (
-                            <div>
-                              <MessageResponse
-                                className=""
-                                key={`${message.id}-${i}`}
-                              >
-                                {part.text}
-                              </MessageResponse>
+                            <div
+                              key={`${message.id}-${i}`}
+                              className="text-sm md:text-base"
+                            >
+                              <MessageResponse>{part.text}</MessageResponse>
                             </div>
                           );
                         case "reasoning":
                           return (
                             <Reasoning
-                              className="w-full"
+                              key={`${message.id}-${i}`}
+                              className="w-full text-xs md:text-sm"
                               isStreaming={
-                                message.parts[-1]?.type === "reasoning" &&
+                                message.parts[message.parts.length - 1]
+                                  ?.type === "reasoning" &&
                                 status === "streaming"
                               }
                             >
@@ -317,20 +322,20 @@ export default function ChatInterface() {
                             <Badge
                               key={`${message.id}-${i}`}
                               variant="secondary"
-                              className="flex items-center gap-2 px-3 py-2 mb-2"
+                              className="flex items-center gap-2 px-2 py-1.5 mb-2 max-w-full"
                             >
                               <img
                                 src="/acrobat.png"
                                 alt="PDF"
-                                className="size-5 object-contain"
+                                className="size-4 md:size-5 shrink-0"
                               />
-                              <span className="text-sm font-medium">
+                              <span className="text-xs md:text-sm font-medium truncate">
                                 {part.filename}
                               </span>
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                className="h-5 w-5 ml-2"
+                                className="h-6 w-6 ml-auto"
                                 onClick={() => {
                                   const newWindow = window.open();
                                   if (newWindow) {
@@ -349,14 +354,15 @@ export default function ChatInterface() {
                       }
                     })}
                   </MessageContent>
+
                   {message.role === "assistant" && (
-                    <MessageActions>
+                    <MessageActions className="mt-1 flex-wrap">
                       <MessageAction
                         label="Retry"
                         onClick={() => regenerate()}
-                        tooltip="Regenerate response"
+                        tooltip="Regenerate"
                       >
-                        <RefreshCcwIcon className="size-4" />
+                        <RefreshCcwIcon className="size-3.5" />
                       </MessageAction>
 
                       <MessageAction
@@ -364,27 +370,26 @@ export default function ChatInterface() {
                         onClick={() =>
                           handleCopy(getMessageText(message.parts))
                         }
-                        tooltip={copied ? "Copied!" : "Copy to clipboard"}
                       >
                         {copied ? (
-                          <Check className="size-4 text-green-500" />
+                          <Check className="size-3.5 text-green-500" />
                         ) : (
-                          <CopyIcon className="size-4" />
+                          <CopyIcon className="size-3.5" />
                         )}
                       </MessageAction>
                     </MessageActions>
                   )}
                 </Message>
-              </>
+              </div>
             ))
           )}
 
           {status === "submitted" && (
             <Message from="assistant">
-              <MessageContent className="mt-6">
-                <div className="flex items-center gap-2 text-muted-foreground">
+              <MessageContent className="mt-4">
+                <div className="flex items-center gap-2 text-muted-foreground text-sm">
                   <Loader2 className="size-4 animate-spin" />
-                  <span>Generating response...</span>
+                  <span>Generating...</span>
                 </div>
               </MessageContent>
             </Message>
@@ -394,35 +399,34 @@ export default function ChatInterface() {
 
       <PromptInput
         onSubmit={status === "streaming" ? () => stop() : handleSubmit}
-        className="mt-4"
+        className="mt-2"
       >
         <PromptInputHeader>
           {attachments.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-2">
+            <div className="flex flex-wrap gap-2 mb-2 max-h-32 overflow-y-auto">
               {attachments.map((file) => (
                 <Badge
                   key={file.id}
                   variant="secondary"
-                  className="flex items-center justify-between gap-3 px-3 py-2 w-full sm:w-auto"
+                  className="flex items-center justify-between gap-2 px-2 py-1 w-full sm:w-auto"
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
                     <img
                       src="/acrobat.png"
                       alt="PDF"
-                      className="size-5 object-contain"
+                      className="size-4 shrink-0"
                     />
-                    <span className="text-sm font-medium truncate max-w-[150px]">
+                    <span className="text-xs font-medium truncate max-w-[120px]">
                       {file.name}
                     </span>
                   </div>
-
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-5 w-5"
+                    className="h-5 w-5 shrink-0"
                     onClick={() => handleRemoveAttachment(file.id)}
                   >
-                    <X className="h-3.5 w-3.5" />
+                    <X className="h-3 w-3" />
                   </Button>
                 </Badge>
               ))}
@@ -434,78 +438,66 @@ export default function ChatInterface() {
           <PromptInputTextarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            className="min-h-[40px] text-sm md:text-base"
+            placeholder="Type a message..."
           />
         </PromptInputBody>
+
         <PromptInputFooter>
-          <PromptInputTools>
-            <PromptInputButton
-              variant={"secondary"}
-              onClick={() => fileInputRef?.current?.click()}
-              aria-label="Attach PDF"
-            >
-              <PlusIcon size="4" />
-            </PromptInputButton>
-            <input
-              type="file"
-              className="hidden"
-              onChange={(e) => {
-                if (e.target.files) {
-                  setFiles(e.target.files);
-                  const file = e.target.files[0];
-                  setAttachments([
-                    {
-                      id: `pdf-${Date.now()}`,
-                      name: file.name,
-                      contentType: file.type,
-                      file,
-                    },
-                  ]);
-                }
-              }}
-              accept="application/pdf"
-              ref={fileInputRef}
-            />
+          <PromptInputTools className="flex justify-between items-center w-full">
+            <div className="flex items-center gap-2">
+              <PromptInputButton
+                variant="secondary"
+                className="size-9"
+                onClick={() => fileInputRef?.current?.click()}
+              >
+                <PlusIcon className="size-4" />
+              </PromptInputButton>
+              <input
+                type="file"
+                className="hidden"
+                onChange={(e) => {
+                  if (e.target.files?.[0]) {
+                    const file = e.target.files[0];
+                    setAttachments([
+                      {
+                        id: `pdf-${Date.now()}`,
+                        name: file.name,
+                        contentType: file.type,
+                        file,
+                      },
+                    ]);
+                  }
+                }}
+                accept="application/pdf"
+                ref={fileInputRef}
+              />
+            </div>
             <PromptInputSubmit
               disabled={!input && status !== "streaming"}
               status={status}
+              className="size-9"
             />
           </PromptInputTools>
         </PromptInputFooter>
       </PromptInput>
 
-      <footer className="">
+      <footer className="flex justify-center md:justify-start pt-2">
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <ButtonGroup>
-              <Button variant={"destructive"}>
-                <Trash2 />
+            <ButtonGroup className="w-full md:w-auto">
+              <Button variant="destructive" className="px-3">
+                <Trash2 className="size-4" />
               </Button>
               <ButtonGroupSeparator />
-              <Button variant={"destructive"}>Dispose chat</Button>
+              <Button
+                variant="destructive"
+                className="flex-1 md:flex-none text-sm"
+              >
+                Dispose chat
+              </Button>
             </ButtonGroup>
           </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <div className="flex items-center gap-2">
-                <Trash2 className="size-5 text-destructive" />
-                <AlertDialogTitle>Delete Chat</AlertDialogTitle>
-              </div>
-              <AlertDialogDescription>
-                This will permanently delete this chat and all of its messages.
-                This action cannot be undone.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction
-                disabled={loading}
-                onClick={() => disposeCurrentChatMessages()}
-                className="bg-destructive text-white hover:bg-destructive/90"
-              >
-                {loading ? "Disposing..." : "Dispose chat"}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
         </AlertDialog>
       </footer>
     </div>

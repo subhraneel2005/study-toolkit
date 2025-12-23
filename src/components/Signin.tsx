@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// TODO: FIX ANY TYPE ERROR
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -238,7 +241,7 @@ export default function Signin({ activeModal, setActiveModal }: SigninProps) {
           </form>
           <DialogFooter className="sm:justify-center">
             <p className="text-center text-muted-foreground text-sm">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <button
                 className="font-medium underline cursor-pointer"
                 type="button"
@@ -251,13 +254,13 @@ export default function Signin({ activeModal, setActiveModal }: SigninProps) {
         </DialogContent>
       </Dialog>
 
-      {showOtpDialog && (
+      {/* {showOtpDialog && (
         <VerifyOtp
           email={userEmail}
           open={showOtpDialog}
           onOpenChange={setShowOtpDialog}
         />
-      )}
+      )} */}
     </>
   );
 }

@@ -20,7 +20,6 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { useAuthStore } from "@/stores/useAuthStore";
 import ProfileLoadingSkeleton from "./ProfileLoadingSkeleton";
 import { useEffect } from "react";
-import { encrypt } from "@/lib/decryptOnServer";
 import { encryptOnClient } from "@/lib/clientEncryption";
 
 export const title = "Profile Edit Form";

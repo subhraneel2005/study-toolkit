@@ -44,7 +44,7 @@ export default function TopNav() {
   return (
     <div className="h-16 justify-start items-center px-2 w-full border-b border-border flex gap-4 fixed top-0 left-0 right-0 bg-background z-50">
       {(isCanvas || isTools) && <Sidebar />}
-      <nav className="md:flex hidden">
+      <nav className="flex">
         <Button
           variant="ghost"
           size="icon"

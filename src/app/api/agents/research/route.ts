@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { researchAgent, webSearchAgent } from "@/agents/researchAgent";
-import { convertToModelMessages } from "ai";
+import { webSearchAgent } from "@/agents/researchAgent";
 
 export async function POST(req: Request) {
   const { query } = await req.json();
@@ -16,7 +15,7 @@ export async function POST(req: Request) {
         "Transfer-Encoding": "chunked",
       },
     });
-  } catch (err: any) {
+  } catch (err) {
     console.error("Research stream error:", err);
     return NextResponse.json(
       { error: "Failed to perform research." },

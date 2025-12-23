@@ -119,39 +119,44 @@ export default function AddTaskScreen({
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Input Area */}
-            <div className="flex w-full items-center gap-2">
+            <div className="md:flex flex-col space-y-2 w-full items-center gap-2">
               <Input
                 type="text"
                 placeholder="Add a new task..."
                 value={taskContent}
                 onChange={(e) => setTaskContent(e.target.value)}
-                className="flex-1"
+                className="flex-1 py-3"
               />
 
-              <Select
-                value={priority}
-                onValueChange={(value: Priority) => setPriority(value)}
-              >
-                <SelectTrigger className="w-[110px]">
-                  <SelectValue placeholder="Priority" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="HIGH">High</SelectItem>
-                  <SelectItem value="MEDIUM">Medium</SelectItem>
-                  <SelectItem value="LOW">Low</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="flex gap-2 justify-start w-full">
+                <Select
+                  value={priority}
+                  onValueChange={(value: Priority) => setPriority(value)}
+                >
+                  <SelectTrigger className="w-[110px]">
+                    <SelectValue placeholder="Priority" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="HIGH">High</SelectItem>
+                    <SelectItem value="MEDIUM">Medium</SelectItem>
+                    <SelectItem value="LOW">Low</SelectItem>
+                  </SelectContent>
+                </Select>
 
-              <Button disabled={loading} onClick={() => handleCreateNewTask()}>
-                {loading ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <span>Adding</span>
-                    <Spinner />
-                  </div>
-                ) : (
-                  "Add"
-                )}
-              </Button>
+                <Button
+                  disabled={loading}
+                  onClick={() => handleCreateNewTask()}
+                >
+                  {loading ? (
+                    <div className="flex items-center justify-center gap-2">
+                      <span>Adding</span>
+                      <Spinner />
+                    </div>
+                  ) : (
+                    "Add"
+                  )}
+                </Button>
+              </div>
             </div>
 
             {/* Task List */}
