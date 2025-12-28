@@ -6,6 +6,7 @@ import NavWrapper from "@/clientWrapper/NavWrapper";
 import PageTransition from "@/clientWrapper/TransitionWrapper";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "Study-toolkit",
@@ -46,6 +47,7 @@ export default function RootLayout({
           <NavWrapper />
           <PageTransition>{children}</PageTransition>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
