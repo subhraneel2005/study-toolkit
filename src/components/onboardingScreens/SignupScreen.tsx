@@ -13,7 +13,7 @@ interface SignupProps {
   onNext: () => void;
 }
 
-export default function SignupScreen({ onNext }: SignupProps) {
+export default function SignupScreen() {
   const signInGoogle = async () => {
     try {
       await authClient.signIn.social({

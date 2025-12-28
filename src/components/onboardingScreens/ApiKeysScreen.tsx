@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { NavProps } from "./OnboardingScreen";
 import { CardDescription, CardFooter, CardTitle } from "../ui/card";
 import { Label } from "../ui/label";
 import Image from "next/image";
@@ -13,7 +12,7 @@ import { addApiKey } from "@/app/actions/addApiKeys";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-export default function ApiKeysScreen({ onNext }: NavProps) {
+export default function ApiKeysScreen() {
   const [geminiKey, setGeminiKey] = useState<ApiKeysPayload["geminiKey"]>("");
   const [serperKey, setSerperKey] = useState<ApiKeysPayload["serperKey"]>("");
   const [isLoading, setIsLoading] = useState(false);
@@ -42,7 +41,6 @@ export default function ApiKeysScreen({ onNext }: NavProps) {
           description:
             "Added api key(s) successfully. Your profile is now complete. Enjoy",
         });
-        onNext();
         router.refresh();
         router.push("/tools");
       }
