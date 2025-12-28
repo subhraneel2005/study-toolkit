@@ -491,6 +491,7 @@ export default function ChatInterface() {
               </Button>
               <ButtonGroupSeparator />
               <Button
+                onClick={disposeCurrentChatMessages}
                 variant="destructive"
                 className="flex-1 md:flex-none text-sm"
               >
