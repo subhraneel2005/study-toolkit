@@ -120,11 +120,7 @@ export default function FeaturesSection() {
           {tools.map((tool) => {
             const IconComponent = tool.icon;
             return (
-              <Link
-                href={session ? tool.href : "/signin"}
-                key={tool.name}
-                className="group block h-full"
-              >
+              <div key={tool.name} className="group block h-full">
                 <Card className="relative h-full border-muted/60 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-primary/20 hover:shadow-lg flex flex-col">
                   <CardHeader>
                     <div className="flex justify-between items-start mb-4">
@@ -151,14 +147,9 @@ export default function FeaturesSection() {
                     <CardDescription className="text-base leading-relaxed">
                       {tool.description}
                     </CardDescription>
-
-                    <div className="flex items-center text-sm font-medium text-primary pt-2">
-                      Try {tool.name}
-                      <ArrowRight className="ml-2 size-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </div>
                   </CardContent>
                 </Card>
-              </Link>
+              </div>
             );
           })}
         </div>
