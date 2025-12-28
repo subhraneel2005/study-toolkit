@@ -40,8 +40,8 @@ export default function OnboardingScreen() {
         </CardHeader>
 
         <CardContent className="pt-4">
-          {currentStep === 1 && <SignupScreen onNext={() => {}} />}
-          {currentStep === 2 && <ApiKeysScreen onNext={() => {}} />}
+          {currentStep === 1 && <SignupScreen />}
+          {currentStep === 2 && <ApiKeysScreen />}
         </CardContent>
       </Card>
     </div>
