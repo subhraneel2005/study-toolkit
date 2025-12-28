@@ -1,5 +1,9 @@
-import { google } from "@ai-sdk/google";
+import { auth } from "@/lib/auth";
+import { decryptOnServer } from "@/lib/decryptOnServer";
+import { prisma } from "@/lib/prisma";
+import { createGoogleGenerativeAI, google } from "@ai-sdk/google";
 import { generateObject } from "ai";
+import { headers } from "next/headers";
 import { z } from "zod";
 
 export async function POST(req: Request) {
@@ -11,8 +15,32 @@ export async function POST(req: Request) {
     });
   }
 
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  if (!session) {
+    throw new Error("UNAUTHORIZED");
+  }
+  const encryptedGeminiKey = await prisma.user.findUnique({
+    where: {
+      id: session.user.id,
+    },
+    select: {
+      geminiKey: true,
+    },
+  });
+
+  if (!encryptedGeminiKey) {
+    throw new Error("PLEASE_PROPERLY_SET_YOUR_GEMINI_KEY");
+  }
+
+  const decryptedGeminiKey = decryptOnServer(encryptedGeminiKey.geminiKey!);
+
+  const provider = createGoogleGenerativeAI({ apiKey: decryptedGeminiKey });
+  provider("gemini-2.5-flash");
+
   const { object } = await generateObject({
-    model: google("gemini-2.5-flash"),
+    model: provider("gemini-2.5-flash"),
     schema: z.object({
       flashcards: z.array(
         z.object({

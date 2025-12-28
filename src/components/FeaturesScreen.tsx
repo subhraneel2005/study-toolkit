@@ -20,6 +20,7 @@ import {
   Pen,
   SquareCheckBig,
 } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
 const tools = [
   {
@@ -86,6 +87,7 @@ const tools = [
 ];
 
 export default function FeaturesSection() {
+  const { data: session } = authClient.useSession();
   return (
     <section
       id="explore-tools"
@@ -119,7 +121,7 @@ export default function FeaturesSection() {
             const IconComponent = tool.icon;
             return (
               <Link
-                href={tool.href}
+                href={session ? tool.href : "/signin"}
                 key={tool.name}
                 className="group block h-full"
               >

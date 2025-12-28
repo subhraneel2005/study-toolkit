@@ -5,7 +5,6 @@ import { Sidebar } from "./Sidebar";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { UserHoverCard } from "./UserHoverCard";
-import AuthModals from "./AuthModals";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useAuthStore } from "@/stores/useAuthStore";
