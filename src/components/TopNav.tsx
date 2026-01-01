@@ -8,7 +8,8 @@ import { UserHoverCard } from "./UserHoverCard";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { authClient } from "@/lib/auth-client";
+import { authClient, signIn } from "@/lib/auth-client";
+import Image from "next/image";
 
 export default function TopNav() {
   const pathname = usePathname();
@@ -36,6 +37,14 @@ export default function TopNav() {
     }
   };
 
+  const signInGoogle = async () => {
+    try {
+      await signIn();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchUser();
   }, [setUser, setIsLoading, pathname]);
@@ -53,7 +62,7 @@ export default function TopNav() {
           {isDark ? <Sun /> : <Moon />}
         </Button>
 
-        {user && (
+        {user ? (
           <>
             {" "}
             <Link href={"/tools"}>
@@ -68,6 +77,20 @@ export default function TopNav() {
             </Link>
             {!isLoading && <UserHoverCard />}
           </>
+        ) : (
+          <Button
+            className="ml-4 border border-border"
+            variant={"secondary"}
+            onClick={signInGoogle}
+          >
+            <Image
+              width={15}
+              height={15}
+              alt="google-icon"
+              src={"/google.png"}
+            />
+            Signin
+          </Button>
         )}
       </nav>
     </div>

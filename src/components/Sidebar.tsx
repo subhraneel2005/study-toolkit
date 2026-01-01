@@ -21,6 +21,7 @@ import {
   SquareCheckBig,
   GitGraph,
   LucideGitGraph,
+  Calendar,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
@@ -59,6 +60,14 @@ export function Sidebar() {
       description: "See your study streak in action.",
       icon: <LucideGitGraph className="h-5 w-5 text-muted-foreground" />,
       href: "/tools/heatmap",
+    },
+
+    {
+      name: "Interships Cal",
+      description:
+        "A detailed calendar of upcoming internships and contests for summer 2026.",
+      icon: <Calendar className="h-5 w-5 text-muted-foreground" />,
+      href: "/tools/internshipCalendar",
     },
   ];
 
