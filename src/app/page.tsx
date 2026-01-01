@@ -7,16 +7,23 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
+import { authClient, signIn } from "@/lib/auth-client";
 
 export default function Home() {
   const { user, isLoading } = useAuthStore();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!isLoading && user) {
-      router.push("/tools");
-    }
-  }, [user, isLoading, router]);
+  const { data: session } = authClient.useSession();
+
+  console.log("Current Session: " + session);
+
+  // useEffect(() => {
+  //   if (session || (!isLoading && user)) {
+  //     router.push("/tools");
+  //   } else {
+  //     router.push("/signin");
+  //   }
+  // }, [user, isLoading, router]);
 
   if (isLoading || user) return null;
 
