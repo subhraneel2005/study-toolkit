@@ -17,13 +17,11 @@ export default function Home() {
 
   console.log("Current Session: " + session);
 
-  // useEffect(() => {
-  //   if (session || (!isLoading && user)) {
-  //     router.push("/tools");
-  //   } else {
-  //     router.push("/signin");
-  //   }
-  // }, [user, isLoading, router]);
+  useEffect(() => {
+    if (session || (!isLoading && user)) {
+      router.push("/tools");
+    }
+  }, [user, isLoading, router]);
 
   if (isLoading || user) return null;
 
