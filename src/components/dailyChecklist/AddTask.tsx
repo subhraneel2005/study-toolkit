@@ -21,6 +21,7 @@ import {
   DialogTitle,
   DialogFooter,
   DialogTrigger,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { NewTask, Priority } from "@/zodSchemas/dailyChecklistSchema";
 import dayjs from "dayjs";
@@ -30,6 +31,7 @@ import { toast } from "sonner";
 import { toggleTaskCompletetion } from "@/app/actions/toggleTaskCompletion";
 import { Spinner } from "../ui/spinner";
 import { useRouter } from "next/navigation";
+import { Plus } from "lucide-react";
 
 const PRIORITY_STYLES: Record<Priority, string> = {
   HIGH: "text-red-800 bg-red-300 border-red-200 hover:bg-red-100 hover:border-red-300",
@@ -52,11 +54,17 @@ export default function AddTaskScreen({
 
   const [openDialogTaskId, setOpenDialogTaskId] = useState<string | null>(null);
 
+  const [open, setOpen] = useState(false);
+
   const formattedDate = dayjs(currentDate).format("DD MMM YYYY");
 
   const router = useRouter();
 
   const handleCreateNewTask = async () => {
+    if (taskContent === "") {
+      toast.error("Task cannot be emopty!");
+      return;
+    }
     try {
       setLoading(true);
       await addTask({
@@ -73,6 +81,7 @@ export default function AddTaskScreen({
       console.error(error);
     } finally {
       setLoading(false);
+      setOpen(false);
     }
   };
 
@@ -115,50 +124,94 @@ export default function AddTaskScreen({
         {/* Main Card */}
         <Card className="border-border/50 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-lg">Tasks</CardTitle>
+            <div className="flex flex-row gap-4 justify-start items-center">
+              <CardTitle className="text-xl font-bold tracking-[-1.5px]">
+                My Tasks
+              </CardTitle>
+
+              <Dialog open={open} onOpenChange={setOpen}>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="outline"
+                    aria-label="Add Task"
+                    className="flex gap-2 items-center"
+                  >
+                    Add new
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </DialogTrigger>
+
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Create New Task</DialogTitle>
+                    <DialogDescription>
+                      Fill in the details below to add a task to your list.
+                    </DialogDescription>
+                  </DialogHeader>
+
+                  <div className="grid gap-4 py-4">
+                    {/* Task Input Group */}
+                    <div className="grid gap-2">
+                      <Input
+                        id="task"
+                        type="text"
+                        placeholder="What needs to be done?"
+                        value={taskContent}
+                        onChange={(e) => setTaskContent(e.target.value)}
+                        className="col-span-3"
+                        autoFocus
+                      />
+                    </div>
+
+                    {/* Settings Group */}
+                    <div className="flex items-center gap-4">
+                      <div className="flex flex-col gap-2">
+                        <p className="text-sm font-medium text-muted-foreground">
+                          Priority
+                        </p>
+                        <Select
+                          value={priority}
+                          onValueChange={(value: Priority) =>
+                            setPriority(value)
+                          }
+                        >
+                          <SelectTrigger className="w-[140px]">
+                            <SelectValue placeholder="Set Priority" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="HIGH">🔴 High</SelectItem>
+                            <SelectItem value="MEDIUM">🟡 Medium</SelectItem>
+                            <SelectItem value="LOW">🔵 Low</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <DialogFooter className="sm:justify-start flex-row gap-2">
+                    <Button variant="outline" onClick={() => setOpen(false)}>
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      disabled={loading || !taskContent.trim()}
+                      onClick={handleCreateNewTask}
+                    >
+                      {loading ? (
+                        <>
+                          <Spinner className="mr-2 h-4 w-4 animate-spin" />
+                          Adding...
+                        </>
+                      ) : (
+                        "Add Task"
+                      )}
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </div>
           </CardHeader>
           <CardContent className="space-y-6">
-            {/* Input Area */}
-            <div className="md:flex flex-col space-y-2 w-full items-center gap-2">
-              <Input
-                type="text"
-                placeholder="Add a new task..."
-                value={taskContent}
-                onChange={(e) => setTaskContent(e.target.value)}
-                className="flex-1 py-3"
-              />
-
-              <div className="flex gap-2 justify-start w-full">
-                <Select
-                  value={priority}
-                  onValueChange={(value: Priority) => setPriority(value)}
-                >
-                  <SelectTrigger className="w-[110px]">
-                    <SelectValue placeholder="Priority" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="HIGH">High</SelectItem>
-                    <SelectItem value="MEDIUM">Medium</SelectItem>
-                    <SelectItem value="LOW">Low</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Button
-                  disabled={loading}
-                  onClick={() => handleCreateNewTask()}
-                >
-                  {loading ? (
-                    <div className="flex items-center justify-center gap-2">
-                      <span>Adding</span>
-                      <Spinner />
-                    </div>
-                  ) : (
-                    "Add"
-                  )}
-                </Button>
-              </div>
-            </div>
-
             {/* Task List */}
             <div className="space-y-3">
               {allTasks.length === 0 && (

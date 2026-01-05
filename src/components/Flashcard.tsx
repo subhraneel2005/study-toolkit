@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import type { Flashcard } from "@/stores/useFlashcardStore";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "./ui/scroll-area";
 
 export default function FlashCard({ flashcard }: { flashcard: Flashcard }) {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -43,14 +44,16 @@ export default function FlashCard({ flashcard }: { flashcard: Flashcard }) {
             transform: "rotateY(180deg)",
           }}
         >
-          <CardContent className="text-center p-0">
-            <div className="text-sm font-medium text-primary-foreground/70 mb-4">
-              ANSWER
-            </div>
-            <CardTitle className="text-sm md:text-lg text-primary-foreground">
-              {flashcard.answer}
-            </CardTitle>
-          </CardContent>
+          <ScrollArea>
+            <CardContent className="text-center p-0">
+              <div className="text-sm font-medium text-primary-foreground/70 mb-4">
+                ANSWER
+              </div>
+              <CardTitle className="text-sm md:text-lg text-primary-foreground">
+                {flashcard.answer}
+              </CardTitle>
+            </CardContent>
+          </ScrollArea>
         </Card>
       </motion.div>
     </div>
