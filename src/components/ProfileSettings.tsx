@@ -1,281 +1,203 @@
+// src/components/ProfileSettings.tsx
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { HelpCircle, Key } from "lucide-react";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
+import { useEffect, useState } from "react";
+import { Key, Coins, User, Mail, ExternalLink, HelpCircle } from "lucide-react";
 import { useAuthStore } from "@/stores/useAuthStore";
 import ProfileLoadingSkeleton from "./ProfileLoadingSkeleton";
-import { useEffect } from "react";
-import { encryptOnClient } from "@/lib/clientEncryption";
+import { getUserProfile } from "@/app/actions/getUserProfile";
 
-export const title = "Profile Edit Form";
-
-const formSchema = z.object({
-  username: z.string().min(3, {
-    message: "Username must be at least 3 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  googleGeminiKey: z.string().optional().or(z.literal("")),
-  serperKey: z.string().optional().or(z.literal("")),
-});
+// Shadcn UI Components
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 export default function ProfileSettings() {
-  const { user, isLoading } = useAuthStore();
-  const username = user?.name;
-  const email = user?.email;
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-      email: "",
-      googleGeminiKey: "",
-      serperKey: "",
-    },
-  });
+  const { isLoading: authStoreLoading } = useAuthStore();
+  const [userProfile, setUserProfile] = useState<Awaited<
+    ReturnType<typeof getUserProfile>
+  > | null>(null);
+  const [profileLoading, setProfileLoading] = useState(true);
 
   useEffect(() => {
-    if (user) {
-      form.reset({
-        username: user.name ?? "",
-        email: user.email ?? "",
-        googleGeminiKey: "",
-        serperKey: "",
-      });
+    async function fetchUserProfile() {
+      setProfileLoading(true);
+      try {
+        const profile = await getUserProfile();
+        setUserProfile(profile);
+      } catch (e) {
+        console.error("Failed to fetch user profile:", e);
+      } finally {
+        setProfileLoading(false);
+      }
     }
-  }, [user, form]);
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      const encryptedGeminiKey = await encryptOnClient(
-        values.googleGeminiKey || ""
-      );
-      const encryptedSerperKey = await encryptOnClient(values.serperKey || "");
-
-      const res = await fetch("/api/keys", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          geminiKey: encryptedGeminiKey,
-          serperKey: encryptedSerperKey,
-        }),
-      });
-
-      if (!res.ok) throw new Error("Failed to update keys");
-
-      const data = await res.json();
-      console.log("✅ Keys updated:", data);
-
-      form.reset({
-        username: user?.name ?? "",
-        email: user?.email ?? "",
-        googleGeminiKey: "",
-        serperKey: "",
-      });
-    } catch (err) {
-      console.error("❌ Error:", err);
+    if (!authStoreLoading) {
+      fetchUserProfile();
     }
-  }
+  }, [authStoreLoading]);
 
-  if (isLoading) {
+  if (authStoreLoading || profileLoading) {
     return <ProfileLoadingSkeleton />;
   }
 
+  if (!userProfile) {
+    return (
+      <div className="mt-8 text-sm text-muted-foreground">
+        Profile not found.
+      </div>
+    );
+  }
+
+  const getInitials = (name: string | null | undefined) => {
+    if (!name) return "NN";
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .substring(0, 2);
+  };
+
   return (
-    <div className="w-full max-w-2xl mt-8">
-      <Form {...form}>
-        <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="mt-8">
-            <h3 className="font-medium text-lg">API Keys</h3>
-            <p className="text-muted-foreground text-sm">
-              Add/Update your API credentials
-            </p>
-          </div>
-          {/* API Keys Section */}
-          <div className="space-y-4">
-            <FormField
-              control={form.control}
-              name="googleGeminiKey"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">Google Gemini API Key</span>
-                      <HoverCard>
-                        <HoverCardTrigger>
-                          <HelpCircle className="h-4 w-4 text-muted-foreground" />
-                        </HoverCardTrigger>
-                        <HoverCardContent side="right">
-                          <p className="text-sm text-muted-foreground">
-                            You can generate a Google Gemini API key from the{" "}
-                            <a
-                              href="https://aistudio.google.com/app/apikey"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-primary underline underline-offset-2"
-                            >
-                              Google AI Studio
-                            </a>
-                            . This key lets you access and integrate Gemini
-                            models in your applications.
-                          </p>
-                        </HoverCardContent>
-                      </HoverCard>
-                    </div>
-                  </FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <img
-                        src="/gemini.png"
-                        alt="Gemini"
-                        className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2"
-                      />
-                      <Input
-                        className="pl-10 bg-background font-mono"
-                        placeholder="AIzaSyD7xQh4E-JsT8FbL2hKz9AbCdEfGhIjKlM"
-                        type="password"
-                        {...field}
-                      />
-                    </div>
-                  </FormControl>
-                  <FormDescription>
-                    Used for AI model integrations via Gemini API.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+    <div className="w-full max-w-2xl mt-8 space-y-10 text-left">
+      {/* --- API Keys Section --- */}
+      <section className="space-y-6">
+        <div>
+          <h3 className="text-lg font-semibold flex items-center gap-2">
+            <Key className="h-5 w-5 text-primary" />
+            API Keys
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            Manage your Google Gemini credentials for AI features.
+          </p>
+        </div>
 
-            <FormField
-              control={form.control}
-              name="serperKey"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">Serper API Key</span>
-                      <HoverCard>
-                        <HoverCardTrigger>
-                          <HelpCircle className="h-4 w-4 text-muted-foreground" />
-                        </HoverCardTrigger>
-                        <HoverCardContent side="right">
-                          <p className="text-sm text-muted-foreground">
-                            You can generate a Serper API key from the{" "}
-                            <a
-                              href="https://serper.dev/api-key"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-primary underline underline-offset-2"
-                            >
-                              Serper.dev dashboard
-                            </a>
-                            . This key allows your app to perform Google Search
-                            and knowledge retrieval through Serper&apos;s API.
-                          </p>
-                        </HoverCardContent>
-                      </HoverCard>
-                    </div>
-                  </FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <img
-                        src="/search.png"
-                        alt="Serper"
-                        className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2"
-                      />
-                      <Input
-                        className="pl-10 bg-background font-mono"
-                        placeholder="serp_8a12b34cd5ef67890ghijklmno"
-                        type="password"
-                        {...field}
-                      />
-                    </div>
-                  </FormControl>
-                  <FormDescription>
-                    Required for web search and data retrieval features.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="flex gap-2">
-            <Button type="submit">Save Changes</Button>
-            <Button type="button" variant="outline">
-              Cancel
-            </Button>
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <Label htmlFor="gemini-key" className="text-sm font-medium">
+              Google Gemini API Key
+            </Label>
+            <HoverCard>
+              <HoverCardTrigger asChild>
+                <HelpCircle className="h-3.5 w-3.5 text-muted-foreground" />
+              </HoverCardTrigger>
+              <HoverCardContent side="top" className="w-80">
+                <p className="text-xs leading-relaxed">
+                  Get your key from the{" "}
+                  <a
+                    href="https://aistudio.google.com/app/apikey"
+                    target="_blank"
+                    className="text-primary hover:underline inline-flex items-center gap-0.5"
+                  >
+                    Google AI Studio <ExternalLink className="h-3 w-3" />
+                  </a>
+                  .
+                </p>
+              </HoverCardContent>
+            </HoverCard>
           </div>
 
-          {/* Profile settings section */}
-          <div className="border-t border-border pt-6">
-            <h3 className="font-medium text-lg">Profile Information</h3>
-            <p className="text-muted-foreground text-sm">
-              View profile information
-            </p>
+          <div className="relative">
+            <img
+              src="/gemini.png"
+              alt="Gemini"
+              className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 opacity-70"
+            />
+            <Input
+              id="gemini-key"
+              value={
+                userProfile.geminiKey ? "••••••••••••••••••••••••••••" : ""
+              }
+              placeholder="No Key provided, using credits"
+              readOnly
+              className="pl-10 bg-muted/30 font-mono text-xs"
+            />
           </div>
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input
-                    className="bg-muted text-muted-foreground cursor-not-allowed"
-                    placeholder="johndoe"
-                    readOnly
-                    disabled
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input
-                    className="bg-muted text-muted-foreground cursor-not-allowed"
-                    placeholder="john@example.com"
-                    type="email"
-                    readOnly
-                    disabled
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  Your email address is not publicly visible.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </form>
-      </Form>
+        </div>
+      </section>
+
+      <Separator />
+
+      {/* --- Credits Section --- */}
+      <section className="space-y-6">
+        <div>
+          <h3 className="text-lg font-semibold flex items-center gap-2">
+            <Coins className="h-5 w-5 text-yellow-500" />
+            Usage & Credits
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            Monitor your available AI credits.
+          </p>
+        </div>
+
+        <div className="p-4 rounded-lg bg-muted/20 border border-border/50 inline-flex flex-col gap-1 min-w-[200px]">
+          <span className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
+            Available Credits
+          </span>
+          <span className="text-3xl font-bold text-primary">
+            {userProfile.credits ?? 0}
+          </span>
+        </div>
+      </section>
+
+      <Separator />
+
+      {/* --- Profile Information Section --- */}
+      <section className="space-y-6">
+        <div>
+          <h3 className="text-lg font-semibold flex items-center gap-2">
+            <User className="h-5 w-5 text-blue-500" />
+            Profile Information
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            Basic account details synced from your login provider.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center gap-4">
+            <Avatar className="h-14 w-14 border">
+              <AvatarImage src={userProfile.image!} />
+              <AvatarFallback>{getInitials(userProfile.name)}</AvatarFallback>
+            </Avatar>
+            <div>
+              <p className="font-medium">{userProfile.name || "Student"}</p>
+              <p className="text-xs text-muted-foreground">Account active</p>
+            </div>
+          </div>
+
+          <div className="grid gap-4">
+            <div className="space-y-2">
+              <Label className="text-xs flex items-center gap-1.5">
+                <User className="h-3 w-3" /> Full Name
+              </Label>
+              <Input
+                value={userProfile.name || ""}
+                readOnly
+                className="bg-muted/30 text-sm"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-xs flex items-center gap-1.5">
+                <Mail className="h-3 w-3" /> Email Address
+              </Label>
+              <Input
+                value={userProfile.email || ""}
+                readOnly
+                className="bg-muted/30 text-sm"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

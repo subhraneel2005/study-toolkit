@@ -18,6 +18,7 @@ import {
   Loader2,
   RefreshCcwIcon,
   SendIcon,
+  Sparkles,
   ThumbsDownIcon,
   ThumbsUpIcon,
 } from "lucide-react";
@@ -43,6 +44,7 @@ import {
   MessageContent,
   MessageResponse,
 } from "./ai-elements/message";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 
 enum Status {
   NEUTRAL = "neutral",
@@ -120,6 +122,16 @@ const SummaryNode = ({ data }: any) => {
         <CardDescription className="text-xs">
           {data?.description}
         </CardDescription>
+        <Alert className="bg-blue-500/5 border-blue-500/20">
+          <Sparkles className="h-4 w-4 text-blue-500" />
+          <AlertTitle className="text-sm font-semibold">
+            Generation Info
+          </AlertTitle>
+          <AlertDescription className="text-xs text-muted-foreground">
+            Summarizing a long text costs{" "}
+            <span className="font-bold text-foreground">5 credits</span>
+          </AlertDescription>
+        </Alert>
       </CardHeader>
 
       {messages.length === 0 ? (

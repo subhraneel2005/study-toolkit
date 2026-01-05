@@ -20,8 +20,18 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
+}
+
+export type UserAvgAggregateOutputType = {
+  credits: number | null
+}
+
+export type UserSumAggregateOutputType = {
+  credits: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -34,6 +44,8 @@ export type UserMinAggregateOutputType = {
   geminiKey: string | null
   serperKey: string | null
   accountCompleted: boolean | null
+  credits: number | null
+  lastCreditsReset: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -48,6 +60,8 @@ export type UserMaxAggregateOutputType = {
   geminiKey: string | null
   serperKey: string | null
   accountCompleted: boolean | null
+  credits: number | null
+  lastCreditsReset: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,11 +76,21 @@ export type UserCountAggregateOutputType = {
   geminiKey: number
   serperKey: number
   accountCompleted: number
+  credits: number
+  lastCreditsReset: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
+
+export type UserAvgAggregateInputType = {
+  credits?: true
+}
+
+export type UserSumAggregateInputType = {
+  credits?: true
+}
 
 export type UserMinAggregateInputType = {
   id?: true
@@ -78,6 +102,8 @@ export type UserMinAggregateInputType = {
   geminiKey?: true
   serperKey?: true
   accountCompleted?: true
+  credits?: true
+  lastCreditsReset?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -92,6 +118,8 @@ export type UserMaxAggregateInputType = {
   geminiKey?: true
   serperKey?: true
   accountCompleted?: true
+  credits?: true
+  lastCreditsReset?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -106,6 +134,8 @@ export type UserCountAggregateInputType = {
   geminiKey?: true
   serperKey?: true
   accountCompleted?: true
+  credits?: true
+  lastCreditsReset?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -149,6 +179,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -179,6 +221,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
+  _avg?: UserAvgAggregateInputType
+  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
@@ -193,9 +237,13 @@ export type UserGroupByOutputType = {
   geminiKey: string | null
   serperKey: string | null
   accountCompleted: boolean
+  credits: number
+  lastCreditsReset: Date | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -228,6 +276,8 @@ export type UserWhereInput = {
   geminiKey?: Prisma.StringNullableFilter<"User"> | string | null
   serperKey?: Prisma.StringNullableFilter<"User"> | string | null
   accountCompleted?: Prisma.BoolFilter<"User"> | boolean
+  credits?: Prisma.IntFilter<"User"> | number
+  lastCreditsReset?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   dailyLogs?: Prisma.DailyLogsListRelationFilter
@@ -247,6 +297,8 @@ export type UserOrderByWithRelationInput = {
   geminiKey?: Prisma.SortOrderInput | Prisma.SortOrder
   serperKey?: Prisma.SortOrderInput | Prisma.SortOrder
   accountCompleted?: Prisma.SortOrder
+  credits?: Prisma.SortOrder
+  lastCreditsReset?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   dailyLogs?: Prisma.DailyLogsOrderByRelationAggregateInput
@@ -269,6 +321,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   geminiKey?: Prisma.StringNullableFilter<"User"> | string | null
   serperKey?: Prisma.StringNullableFilter<"User"> | string | null
   accountCompleted?: Prisma.BoolFilter<"User"> | boolean
+  credits?: Prisma.IntFilter<"User"> | number
+  lastCreditsReset?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   dailyLogs?: Prisma.DailyLogsListRelationFilter
@@ -288,11 +342,15 @@ export type UserOrderByWithAggregationInput = {
   geminiKey?: Prisma.SortOrderInput | Prisma.SortOrder
   serperKey?: Prisma.SortOrderInput | Prisma.SortOrder
   accountCompleted?: Prisma.SortOrder
+  credits?: Prisma.SortOrder
+  lastCreditsReset?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
+  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
+  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -308,6 +366,8 @@ export type UserScalarWhereWithAggregatesInput = {
   geminiKey?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   serperKey?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   accountCompleted?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  credits?: Prisma.IntWithAggregatesFilter<"User"> | number
+  lastCreditsReset?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -322,6 +382,8 @@ export type UserCreateInput = {
   geminiKey?: string | null
   serperKey?: string | null
   accountCompleted?: boolean
+  credits?: number
+  lastCreditsReset?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   dailyLogs?: Prisma.DailyLogsCreateNestedManyWithoutUserInput
@@ -341,6 +403,8 @@ export type UserUncheckedCreateInput = {
   geminiKey?: string | null
   serperKey?: string | null
   accountCompleted?: boolean
+  credits?: number
+  lastCreditsReset?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   dailyLogs?: Prisma.DailyLogsUncheckedCreateNestedManyWithoutUserInput
@@ -360,6 +424,8 @@ export type UserUpdateInput = {
   geminiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serperKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCreditsReset?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyLogs?: Prisma.DailyLogsUpdateManyWithoutUserNestedInput
@@ -379,6 +445,8 @@ export type UserUncheckedUpdateInput = {
   geminiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serperKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCreditsReset?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyLogs?: Prisma.DailyLogsUncheckedUpdateManyWithoutUserNestedInput
@@ -398,6 +466,8 @@ export type UserCreateManyInput = {
   geminiKey?: string | null
   serperKey?: string | null
   accountCompleted?: boolean
+  credits?: number
+  lastCreditsReset?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -412,6 +482,8 @@ export type UserUpdateManyMutationInput = {
   geminiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serperKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCreditsReset?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -426,6 +498,8 @@ export type UserUncheckedUpdateManyInput = {
   geminiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serperKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCreditsReset?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -440,8 +514,14 @@ export type UserCountOrderByAggregateInput = {
   geminiKey?: Prisma.SortOrder
   serperKey?: Prisma.SortOrder
   accountCompleted?: Prisma.SortOrder
+  credits?: Prisma.SortOrder
+  lastCreditsReset?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type UserAvgOrderByAggregateInput = {
+  credits?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -454,6 +534,8 @@ export type UserMaxOrderByAggregateInput = {
   geminiKey?: Prisma.SortOrder
   serperKey?: Prisma.SortOrder
   accountCompleted?: Prisma.SortOrder
+  credits?: Prisma.SortOrder
+  lastCreditsReset?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -468,8 +550,14 @@ export type UserMinOrderByAggregateInput = {
   geminiKey?: Prisma.SortOrder
   serperKey?: Prisma.SortOrder
   accountCompleted?: Prisma.SortOrder
+  credits?: Prisma.SortOrder
+  lastCreditsReset?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type UserSumOrderByAggregateInput = {
+  credits?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -492,6 +580,18 @@ export type BoolFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -580,6 +680,8 @@ export type UserCreateWithoutDailyLogsInput = {
   geminiKey?: string | null
   serperKey?: string | null
   accountCompleted?: boolean
+  credits?: number
+  lastCreditsReset?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   dailyChecklist?: Prisma.DailyChecklistCreateNestedManyWithoutUserInput
@@ -598,6 +700,8 @@ export type UserUncheckedCreateWithoutDailyLogsInput = {
   geminiKey?: string | null
   serperKey?: string | null
   accountCompleted?: boolean
+  credits?: number
+  lastCreditsReset?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   dailyChecklist?: Prisma.DailyChecklistUncheckedCreateNestedManyWithoutUserInput
@@ -632,6 +736,8 @@ export type UserUpdateWithoutDailyLogsInput = {
   geminiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serperKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCreditsReset?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyChecklist?: Prisma.DailyChecklistUpdateManyWithoutUserNestedInput
@@ -650,6 +756,8 @@ export type UserUncheckedUpdateWithoutDailyLogsInput = {
   geminiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serperKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCreditsReset?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyChecklist?: Prisma.DailyChecklistUncheckedUpdateManyWithoutUserNestedInput
@@ -668,6 +776,8 @@ export type UserCreateWithoutDailyChecklistInput = {
   geminiKey?: string | null
   serperKey?: string | null
   accountCompleted?: boolean
+  credits?: number
+  lastCreditsReset?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   dailyLogs?: Prisma.DailyLogsCreateNestedManyWithoutUserInput
@@ -686,6 +796,8 @@ export type UserUncheckedCreateWithoutDailyChecklistInput = {
   geminiKey?: string | null
   serperKey?: string | null
   accountCompleted?: boolean
+  credits?: number
+  lastCreditsReset?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   dailyLogs?: Prisma.DailyLogsUncheckedCreateNestedManyWithoutUserInput
@@ -720,6 +832,8 @@ export type UserUpdateWithoutDailyChecklistInput = {
   geminiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serperKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCreditsReset?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyLogs?: Prisma.DailyLogsUpdateManyWithoutUserNestedInput
@@ -738,6 +852,8 @@ export type UserUncheckedUpdateWithoutDailyChecklistInput = {
   geminiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serperKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCreditsReset?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyLogs?: Prisma.DailyLogsUncheckedUpdateManyWithoutUserNestedInput
@@ -756,6 +872,8 @@ export type UserCreateWithoutSessionsInput = {
   geminiKey?: string | null
   serperKey?: string | null
   accountCompleted?: boolean
+  credits?: number
+  lastCreditsReset?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   dailyLogs?: Prisma.DailyLogsCreateNestedManyWithoutUserInput
@@ -774,6 +892,8 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   geminiKey?: string | null
   serperKey?: string | null
   accountCompleted?: boolean
+  credits?: number
+  lastCreditsReset?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   dailyLogs?: Prisma.DailyLogsUncheckedCreateNestedManyWithoutUserInput
@@ -808,6 +928,8 @@ export type UserUpdateWithoutSessionsInput = {
   geminiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serperKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCreditsReset?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyLogs?: Prisma.DailyLogsUpdateManyWithoutUserNestedInput
@@ -826,6 +948,8 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   geminiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serperKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCreditsReset?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyLogs?: Prisma.DailyLogsUncheckedUpdateManyWithoutUserNestedInput
@@ -844,6 +968,8 @@ export type UserCreateWithoutAccountsInput = {
   geminiKey?: string | null
   serperKey?: string | null
   accountCompleted?: boolean
+  credits?: number
+  lastCreditsReset?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   dailyLogs?: Prisma.DailyLogsCreateNestedManyWithoutUserInput
@@ -862,6 +988,8 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   geminiKey?: string | null
   serperKey?: string | null
   accountCompleted?: boolean
+  credits?: number
+  lastCreditsReset?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   dailyLogs?: Prisma.DailyLogsUncheckedCreateNestedManyWithoutUserInput
@@ -896,6 +1024,8 @@ export type UserUpdateWithoutAccountsInput = {
   geminiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serperKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCreditsReset?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyLogs?: Prisma.DailyLogsUpdateManyWithoutUserNestedInput
@@ -914,6 +1044,8 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   geminiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serperKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCreditsReset?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyLogs?: Prisma.DailyLogsUncheckedUpdateManyWithoutUserNestedInput
@@ -932,6 +1064,8 @@ export type UserCreateWithoutVerificationInput = {
   geminiKey?: string | null
   serperKey?: string | null
   accountCompleted?: boolean
+  credits?: number
+  lastCreditsReset?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   dailyLogs?: Prisma.DailyLogsCreateNestedManyWithoutUserInput
@@ -950,6 +1084,8 @@ export type UserUncheckedCreateWithoutVerificationInput = {
   geminiKey?: string | null
   serperKey?: string | null
   accountCompleted?: boolean
+  credits?: number
+  lastCreditsReset?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   dailyLogs?: Prisma.DailyLogsUncheckedCreateNestedManyWithoutUserInput
@@ -984,6 +1120,8 @@ export type UserUpdateWithoutVerificationInput = {
   geminiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serperKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCreditsReset?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyLogs?: Prisma.DailyLogsUpdateManyWithoutUserNestedInput
@@ -1002,6 +1140,8 @@ export type UserUncheckedUpdateWithoutVerificationInput = {
   geminiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   serperKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accountCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  credits?: Prisma.IntFieldUpdateOperationsInput | number
+  lastCreditsReset?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyLogs?: Prisma.DailyLogsUncheckedUpdateManyWithoutUserNestedInput
@@ -1087,6 +1227,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   geminiKey?: boolean
   serperKey?: boolean
   accountCompleted?: boolean
+  credits?: boolean
+  lastCreditsReset?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   dailyLogs?: boolean | Prisma.User$dailyLogsArgs<ExtArgs>
@@ -1107,6 +1249,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   geminiKey?: boolean
   serperKey?: boolean
   accountCompleted?: boolean
+  credits?: boolean
+  lastCreditsReset?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1121,6 +1265,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   geminiKey?: boolean
   serperKey?: boolean
   accountCompleted?: boolean
+  credits?: boolean
+  lastCreditsReset?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1135,11 +1281,13 @@ export type UserSelectScalar = {
   geminiKey?: boolean
   serperKey?: boolean
   accountCompleted?: boolean
+  credits?: boolean
+  lastCreditsReset?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "timezone" | "image" | "geminiKey" | "serperKey" | "accountCompleted" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "timezone" | "image" | "geminiKey" | "serperKey" | "accountCompleted" | "credits" | "lastCreditsReset" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   dailyLogs?: boolean | Prisma.User$dailyLogsArgs<ExtArgs>
   dailyChecklist?: boolean | Prisma.User$dailyChecklistArgs<ExtArgs>
@@ -1170,6 +1318,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     geminiKey: string | null
     serperKey: string | null
     accountCompleted: boolean
+    credits: number
+    lastCreditsReset: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1609,6 +1759,8 @@ export interface UserFieldRefs {
   readonly geminiKey: Prisma.FieldRef<"User", 'String'>
   readonly serperKey: Prisma.FieldRef<"User", 'String'>
   readonly accountCompleted: Prisma.FieldRef<"User", 'Boolean'>
+  readonly credits: Prisma.FieldRef<"User", 'Int'>
+  readonly lastCreditsReset: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }

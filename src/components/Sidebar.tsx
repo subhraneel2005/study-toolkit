@@ -90,12 +90,12 @@ export function Sidebar() {
       icon: <BookMarked className="h-5 w-5 text-muted-foreground" />,
       href: "/tools/summarizer",
     },
-    {
-      name: "Web Search tool",
-      description: "Searches relevant research papers.",
-      icon: <Search className="h-5 w-5 text-muted-foreground" />,
-      href: "/tools/webSearch",
-    },
+    // {
+    //   name: "Web Search tool",
+    //   description: "Searches relevant research papers.",
+    //   icon: <Search className="h-5 w-5 text-muted-foreground" />,
+    //   href: "/tools/webSearch",
+    // },
   ];
 
   return (

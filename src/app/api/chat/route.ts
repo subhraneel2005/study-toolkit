@@ -1,4 +1,4 @@
-import { GoogleGenerativeAIProviderOptions } from "@ai-sdk/google";
+import { google, GoogleGenerativeAIProviderOptions } from "@ai-sdk/google";
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { prisma } from "@/lib/prisma";
@@ -13,38 +13,53 @@ export async function POST(req: Request) {
   if (!session) {
     throw new Error("UNAUTHORIZED");
   }
-  const encryptedGeminiKey = await prisma.user.findUnique({
+  const userCredits = await prisma.user.findUnique({
     where: {
       id: session.user.id,
     },
     select: {
-      geminiKey: true,
+      credits: true,
     },
   });
 
-  if (!encryptedGeminiKey) {
-    throw new Error("PLEASE_PROPERLY_SET_YOUR_GEMINI_KEY");
+  if (!userCredits?.credits) {
+    throw new Error("CREDITS_NOT_FOUND_FOR_THIS_USER");
   }
 
-  const decryptedGeminiKey = decryptOnServer(encryptedGeminiKey.geminiKey!);
-
-  const provider = createGoogleGenerativeAI({ apiKey: decryptedGeminiKey });
-  provider("gemini-2.5-flash");
+  if (userCredits.credits <= 0) {
+    throw new Error("CREDITS_ARE_ZERO, LIMIT_REACHED");
+  }
 
   const { messages }: { messages: UIMessage[] } = await req.json();
 
-  const result = streamText({
-    model: provider("gemini-2.5-flash"),
-    system: "You are a helpful assistant",
-    messages: convertToModelMessages(messages),
-    providerOptions: {
-      google: {
-        thinkingConfig: {
-          includeThoughts: true,
-        },
-      } satisfies GoogleGenerativeAIProviderOptions,
-    },
-  });
+  try {
+    const result = streamText({
+      model: google("gemini-2.5-flash"),
+      system: "You are a helpful assistant",
+      messages: convertToModelMessages(messages),
+      providerOptions: {
+        google: {
+          thinkingConfig: {
+            includeThoughts: true,
+          },
+        } satisfies GoogleGenerativeAIProviderOptions,
+      },
+    });
 
-  return result.toUIMessageStreamResponse();
+    await prisma.user.update({
+      where: {
+        id: session.user.id,
+      },
+      data: {
+        credits: {
+          decrement: 5,
+        },
+      },
+    });
+
+    return result.toUIMessageStreamResponse();
+  } catch (error) {
+    console.error("INTERNAL_ERROR_AT_CHAT_ROUTE" + error);
+    throw new Error("INTERNAL_ERROR_AT_CHAT_ROUTE");
+  }
 }

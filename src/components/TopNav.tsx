@@ -16,6 +16,7 @@ export default function TopNav() {
 
   const isCanvas = pathname === "/canvas";
   const isTools = pathname.startsWith("/tools");
+  const isProfile = pathname.startsWith("/profile");
 
   const { theme, setTheme, systemTheme } = useTheme();
 
@@ -39,7 +40,10 @@ export default function TopNav() {
 
   const signInGoogle = async () => {
     try {
-      await signIn();
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/api/auth/post-signup",
+      });
     } catch (error) {
       console.error(error);
     }
@@ -51,7 +55,7 @@ export default function TopNav() {
 
   return (
     <div className="h-16 justify-start items-center px-2 w-full border-b border-border flex gap-4 fixed top-0 left-0 right-0 bg-background z-50">
-      {(isCanvas || isTools) && <Sidebar />}
+      {(isCanvas || isTools || isProfile) && <Sidebar />}
       <nav className="flex">
         <Button
           variant="ghost"

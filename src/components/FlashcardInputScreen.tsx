@@ -1,11 +1,12 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 
 interface InputProps {
   onGenerate: (topic: string) => void;
@@ -40,6 +41,19 @@ export default function FlashcardInputScreen({
               </p>
 
               <div className="space-y-4">
+                <Alert className="bg-blue-500/5 border-blue-500/20">
+                  <Sparkles className="h-4 w-4 text-blue-500" />
+                  <AlertTitle className="text-sm font-semibold">
+                    Generation Info
+                  </AlertTitle>
+                  <AlertDescription className="text-xs text-muted-foreground">
+                    Generating 10 custom flashcards for this topic costs{" "}
+                    <span className="font-bold text-foreground">
+                      10 credits
+                    </span>
+                    One credit per card.
+                  </AlertDescription>
+                </Alert>
                 <div>
                   <Label
                     htmlFor="topic"

@@ -1,22 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import SignupScreen from "./SignupScreen";
-import ApiKeysScreen from "./ApiKeysScreen";
-import { authClient } from "@/lib/auth-client";
 
 export default function OnboardingScreen() {
   const [currentStep, setCurrentStep] = useState(1);
-  const totalSteps = 2;
-
-  const { data: session, isPending } = authClient?.useSession();
-
-  useEffect(() => {
-    if (!isPending && session) {
-      setCurrentStep(2);
-    }
-  }, [session, isPending]);
+  const totalSteps = 1;
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-background p-4">
@@ -41,7 +31,6 @@ export default function OnboardingScreen() {
 
         <CardContent className="pt-4">
           {currentStep === 1 && <SignupScreen />}
-          {currentStep === 2 && <ApiKeysScreen />}
         </CardContent>
       </Card>
     </div>

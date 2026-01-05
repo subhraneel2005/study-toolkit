@@ -19,6 +19,9 @@ model User {
 
   accountCompleted Boolean @default(false)
 
+  credits          Int       @default(0)
+  lastCreditsReset DateTime?
+
   dailyLogs      DailyLogs[]
   dailyChecklist DailyChecklist[]
 
