@@ -17,6 +17,8 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import MigrationBanner from "./MigrationBanner";
+import AlertInfo from "./AlertInfo";
 
 export default function ProfileSettings() {
   const { isLoading: authStoreLoading } = useAuthStore();
@@ -67,6 +69,7 @@ export default function ProfileSettings() {
 
   return (
     <div className="w-full max-w-2xl mt-8 space-y-10 text-left">
+      <AlertInfo />
       {/* --- API Keys Section --- */}
       <section className="space-y-6">
         <div>
@@ -103,6 +106,8 @@ export default function ProfileSettings() {
               </HoverCardContent>
             </HoverCard>
           </div>
+
+          <MigrationBanner />
 
           <div className="relative">
             <img
