@@ -8,6 +8,7 @@ import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/next";
 import SnowfallWrapper from "@/clientWrapper/SnowfallWrapper";
+import MigrationBanner from "@/components/MigrationBanner";
 
 export const metadata: Metadata = {
   title: "Study-toolkit",
@@ -46,6 +47,7 @@ export default function RootLayout({
         >
           <Toaster position="top-right" richColors />
           <NavWrapper />
+          <MigrationBanner />
           <SnowfallWrapper />
           <PageTransition>{children}</PageTransition>
         </ThemeProvider>
