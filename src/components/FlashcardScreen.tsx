@@ -6,7 +6,6 @@ import { ChevronLeft, ChevronRight, Trash2 } from "lucide-react";
 import React, { useState } from "react";
 import FlashCard from "./Flashcard";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 
 export default function FlashcardScreen() {
   const { flashcards, clearFlashcards } = useFlashcardsStore();

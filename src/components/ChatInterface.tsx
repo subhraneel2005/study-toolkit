@@ -37,6 +37,7 @@ import {
 
 import {
   Check,
+  Coins,
   CopyIcon,
   ExternalLink,
   Loader2,
@@ -69,6 +70,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useRouter } from "next/navigation";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 
 async function convertFilesToDataURLs(
   files: FileList
@@ -268,6 +270,17 @@ export default function ChatInterface() {
 
   return (
     <div className="bg-background border border-accent w-full max-w-4xl mx-auto md:px-6 px-3 py-4 rounded-2xl shadow-lg space-y-4 md:space-y-6 mt-16">
+      <Alert className="bg-primary/5 border-primary/20">
+        <Coins className="h-4 w-4 text-primary" />
+        <AlertTitle className="text-sm font-semibold">Credit Usage</AlertTitle>
+        <AlertDescription className="text-xs text-muted-foreground">
+          Each response in this chat costs{" "}
+          <span className="font-bold text-foreground">5 credits</span> because
+          the AI generates detailed, long-form explanations for your study
+          materials.
+        </AlertDescription>
+      </Alert>
+
       <Conversation
         className="relative w-full rounded-xl overflow-y-auto bg-card border"
         style={{

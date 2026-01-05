@@ -1,7 +1,6 @@
 import { auth } from "@/lib/auth";
-import { decryptOnServer } from "@/lib/decryptOnServer";
 import { prisma } from "@/lib/prisma";
-import { createGoogleGenerativeAI, google } from "@ai-sdk/google";
+import { google } from "@ai-sdk/google";
 import { generateObject } from "ai";
 import { headers } from "next/headers";
 import { z } from "zod";
@@ -21,44 +20,60 @@ export async function POST(req: Request) {
   if (!session) {
     throw new Error("UNAUTHORIZED");
   }
-  const encryptedGeminiKey = await prisma.user.findUnique({
+
+  const userCredits = await prisma.user.findUnique({
     where: {
       id: session.user.id,
     },
     select: {
-      geminiKey: true,
+      credits: true,
     },
   });
 
-  if (!encryptedGeminiKey) {
-    throw new Error("PLEASE_PROPERLY_SET_YOUR_GEMINI_KEY");
+  if (!userCredits?.credits) {
+    throw new Error("CREDITS_NOT_FOUND_FOR_THIS_USER");
   }
 
-  const decryptedGeminiKey = decryptOnServer(encryptedGeminiKey.geminiKey!);
+  if (userCredits.credits <= 0) {
+    throw new Error("CREDITS_ARE_ZERO, LIMIT_REACHED");
+  }
 
-  const provider = createGoogleGenerativeAI({ apiKey: decryptedGeminiKey });
-  provider("gemini-2.5-flash");
+  try {
+    const { object } = await generateObject({
+      model: google("gemini-2.5-flash"),
+      schema: z.object({
+        flashcards: z.array(
+          z.object({
+            id: z.number(),
+            question: z.string(),
+            answer: z.string(),
+          })
+        ),
+      }),
+      prompt: `Generate 10 educational flashcards about: ${topic}. 
+      
+      Create clear, concise questions with concise accurate answers. 
+      Each flashcard should test understanding of a key concept.
+      Make the questions progressively challenging.`,
+    });
 
-  const { object } = await generateObject({
-    model: provider("gemini-2.5-flash"),
-    schema: z.object({
-      flashcards: z.array(
-        z.object({
-          id: z.number(),
-          question: z.string(),
-          answer: z.string(),
-        })
-      ),
-    }),
-    prompt: `Generate 10 educational flashcards about: ${topic}. 
-    
-    Create clear, concise questions with accurate answers. 
-    Each flashcard should test understanding of a key concept.
-    Make the questions progressively challenging.`,
-  });
+    await prisma.user.update({
+      where: {
+        id: session.user.id,
+      },
+      data: {
+        credits: {
+          decrement: 10,
+        },
+      },
+    });
 
-  return new Response(JSON.stringify(object, null, 2), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
+    return new Response(JSON.stringify(object, null, 2), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.error("INTERNAL_ERROR_AT_FLASHCARDS_ROUTE" + error);
+    throw new Error("INTERNAL_ERROR_AT_FLASHCARDS_ROUTE");
+  }
 }

@@ -64,16 +64,16 @@ const tools = [
     bgColor: "bg-rose-500/10",
   },
 
-  {
-    name: "Web Search Agent",
-    description:
-      "Access academic research papers and trusted sources instantly without hallucinations.",
-    icon: Search,
-    href: "/tools/webSearch",
-    tag: "AI Powered",
-    color: "text-blue-500",
-    bgColor: "bg-blue-500/10",
-  },
+  // {
+  //   name: "Web Search Agent",
+  //   description:
+  //     "Access academic research papers and trusted sources instantly without hallucinations.",
+  //   icon: Search,
+  //   href: "/tools/webSearch",
+  //   tag: "AI Powered",
+  //   color: "text-blue-500",
+  //   bgColor: "bg-blue-500/10",
+  // },
   {
     name: "Summarizer Agent",
     description:

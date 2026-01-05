@@ -6,19 +6,15 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { CardDescription, CardTitle } from "@/components/ui/card";
-import { authClient, signIn } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
-
-interface SignupProps {
-  onNext: () => void;
-}
 
 export default function SignupScreen() {
   const signInGoogle = async () => {
     try {
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/onboarding",
+        callbackURL: "/api/auth/post-signup",
       });
     } catch (error) {
       console.error(error);
