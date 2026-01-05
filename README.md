@@ -55,11 +55,14 @@ these tools don’t store long-term state and are focused on quick outcomes.
 
 ## key features
 
-- **byok (bring your own key)**  
-  users plug in their own google gemini api key using vercel’s ai sdk.
+- **credit-based ai usage**  
+  get started instantly with 300 free credits. no need to set up api keys or navigate complex dashboards.
 
-- **secure two-layer api key encryption**  
-  api keys are encrypted before storage with an additional protection layer.
+- **intelligent token management**  
+  different tools cost different credits based on their complexity and output length (e.g., chat with reasoning vs. flashcards).
+
+- **future-proof fallback**
+  once credits are exhausted, the platform is designed to allow users to plug in their own Gemini API key to continue usage.
 
 - **server actions + react server components**  
   used for optimized, secure data mutations and rendering.
